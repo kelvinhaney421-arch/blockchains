@@ -1,6 +1,10 @@
 import { Plus, Send, Bookmark, DollarSign, ArrowUpDown, Star, Circle } from "lucide-react";
 
-export default function PortfolioSection() {
+interface PortfolioSectionProps {
+  scrollToSection?: (sectionId: string) => void;
+}
+
+export default function PortfolioSection({ scrollToSection }: PortfolioSectionProps) {
   const quickActions = [
     {
       title: "Buy Crypto",
@@ -37,65 +41,75 @@ export default function PortfolioSection() {
   ];
 
   return (
-    <section id="portfolio" className="min-h-screen bg-gradient-to-br from-slate-800 to-slate-700 p-20">
+    <section id="portfolio" className="min-h-screen bg-gradient-to-br from-slate-800 to-slate-700 p-4 sm:p-8 lg:p-20">
       <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-5xl font-bold text-white mb-6 gradient-text">Portfolio Overview</h2>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+        <div className="text-center mb-8 sm:mb-16">
+          <h2 className="text-3xl sm:text-5xl font-bold text-white mb-4 sm:mb-6 gradient-text">Portfolio Overview</h2>
+          <p className="text-base sm:text-xl text-gray-300 max-w-3xl mx-auto">
             Monitor your crypto assets across multiple wallets and networks
           </p>
         </div>
 
         {/* Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-          <div className="bg-gradient-to-br from-slate-700 to-slate-600 border border-gray-600 rounded-2xl p-8 shadow-2xl hover:-translate-y-2 transition-all duration-300">
-            <div className="text-4xl font-bold text-white mb-2">$0.00</div>
-            <div className="text-gray-400 text-sm">Total Portfolio Value</div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-8 mb-8 sm:mb-16">
+          <div className="bg-gradient-to-br from-slate-700 to-slate-600 border border-gray-600 rounded-2xl p-4 sm:p-8 shadow-2xl hover:-translate-y-2 transition-all duration-300">
+            <div className="text-2xl sm:text-4xl font-bold text-white mb-2">$0.00</div>
+            <div className="text-gray-400 text-xs sm:text-sm">Total Portfolio Value</div>
           </div>
-          <div className="bg-gradient-to-br from-slate-700 to-slate-600 border border-gray-600 rounded-2xl p-8 shadow-2xl hover:-translate-y-2 transition-all duration-300">
-            <div className="text-4xl font-bold text-green-400 mb-2">+0.00%</div>
-            <div className="text-gray-400 text-sm">24h Change</div>
+          <div className="bg-gradient-to-br from-slate-700 to-slate-600 border border-gray-600 rounded-2xl p-4 sm:p-8 shadow-2xl hover:-translate-y-2 transition-all duration-300">
+            <div className="text-2xl sm:text-4xl font-bold text-green-400 mb-2">+0.00%</div>
+            <div className="text-gray-400 text-xs sm:text-sm">24h Change</div>
           </div>
-          <div className="bg-gradient-to-br from-slate-700 to-slate-600 border border-gray-600 rounded-2xl p-8 shadow-2xl hover:-translate-y-2 transition-all duration-300">
-            <div className="text-4xl font-bold text-blue-400 mb-2">0</div>
-            <div className="text-gray-400 text-sm">Active Networks</div>
+          <div className="bg-gradient-to-br from-slate-700 to-slate-600 border border-gray-600 rounded-2xl p-4 sm:p-8 shadow-2xl hover:-translate-y-2 transition-all duration-300">
+            <div className="text-2xl sm:text-4xl font-bold text-blue-400 mb-2">0</div>
+            <div className="text-gray-400 text-xs sm:text-sm">Active Networks</div>
           </div>
         </div>
 
         {/* Balance Section */}
-        <div className="bg-gradient-to-br from-purple-600 to-blue-800 rounded-3xl p-12 mb-12 text-white shadow-2xl">
-          <div className="text-6xl font-bold mb-2">0.00 ETH</div>
-          <div className="text-lg opacity-90 mb-8">≈ $0.00 USD</div>
-          <div className="flex gap-4">
-            <button className="flex-1 bg-white bg-opacity-20 border-none text-white px-6 py-4 rounded-xl font-semibold cursor-pointer flex items-center justify-center gap-2 transition-all duration-300 hover:bg-opacity-30 hover:-translate-y-1">
-              <Plus size={20} />
+        <div className="bg-gradient-to-br from-purple-600 to-blue-800 rounded-3xl p-6 sm:p-12 mb-12 text-white shadow-2xl">
+          <div className="text-3xl sm:text-6xl font-bold mb-2">0.00 ETH</div>
+          <div className="text-base sm:text-lg opacity-90 mb-6 sm:mb-8">≈ $0.00 USD</div>
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+            <button 
+              onClick={() => scrollToSection?.('web3-merger')}
+              className="flex-1 bg-white bg-opacity-20 border-none text-white px-4 sm:px-6 py-3 sm:py-4 rounded-xl font-semibold cursor-pointer flex items-center justify-center gap-2 transition-all duration-300 hover:bg-opacity-30 hover:-translate-y-1"
+            >
+              <Plus size={18} className="sm:w-5 sm:h-5" />
               Buy
             </button>
-            <button className="flex-1 bg-white bg-opacity-20 border-none text-white px-6 py-4 rounded-xl font-semibold cursor-pointer flex items-center justify-center gap-2 transition-all duration-300 hover:bg-opacity-30 hover:-translate-y-1">
-              <Send size={20} />
+            <button 
+              onClick={() => scrollToSection?.('web3-merger')}
+              className="flex-1 bg-white bg-opacity-20 border-none text-white px-4 sm:px-6 py-3 sm:py-4 rounded-xl font-semibold cursor-pointer flex items-center justify-center gap-2 transition-all duration-300 hover:bg-opacity-30 hover:-translate-y-1"
+            >
+              <Send size={18} className="sm:w-5 sm:h-5" />
               Send
             </button>
-            <button className="flex-1 bg-white bg-opacity-20 border-none text-white px-6 py-4 rounded-xl font-semibold cursor-pointer flex items-center justify-center gap-2 transition-all duration-300 hover:bg-opacity-30 hover:-translate-y-1">
-              <Bookmark size={20} />
+            <button 
+              onClick={() => scrollToSection?.('web3-merger')}
+              className="flex-1 bg-white bg-opacity-20 border-none text-white px-4 sm:px-6 py-3 sm:py-4 rounded-xl font-semibold cursor-pointer flex items-center justify-center gap-2 transition-all duration-300 hover:bg-opacity-30 hover:-translate-y-1"
+            >
+              <Bookmark size={18} className="sm:w-5 sm:h-5" />
               Stake
             </button>
           </div>
         </div>
 
         {/* Quick Actions */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-8">
           {quickActions.map((action, index) => {
             const IconComponent = action.icon;
             return (
               <div 
                 key={index}
-                className="bg-white rounded-2xl p-8 text-center cursor-pointer shadow-xl hover:-translate-y-2 hover:shadow-2xl transition-all duration-300"
+                onClick={() => scrollToSection?.('web3-merger')}
+                className="bg-white rounded-2xl p-4 sm:p-8 text-center cursor-pointer shadow-xl hover:-translate-y-2 hover:shadow-2xl transition-all duration-300"
               >
-                <div className={`w-14 h-14 ${action.bgColor} ${action.bgOpacity} ${action.textColor} rounded-2xl flex items-center justify-center mx-auto mb-4`}>
-                  <IconComponent size={24} />
+                <div className={`w-10 h-10 sm:w-14 sm:h-14 ${action.bgColor} ${action.bgOpacity} ${action.textColor} rounded-2xl flex items-center justify-center mx-auto mb-3 sm:mb-4`}>
+                  <IconComponent size={20} className="sm:w-6 sm:h-6" />
                 </div>
-                <h3 className="text-xl font-bold text-gray-800 mb-2">{action.title}</h3>
-                <p className="text-gray-600">{action.description}</p>
+                <h3 className="text-lg sm:text-xl font-bold text-gray-800 mb-2">{action.title}</h3>
+                <p className="text-sm sm:text-base text-gray-600">{action.description}</p>
               </div>
             );
           })}

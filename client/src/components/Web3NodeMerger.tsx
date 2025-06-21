@@ -46,12 +46,12 @@ export default function Web3NodeMerger() {
 
   return (
     <section id="web3-merger" className="min-h-screen bg-gradient-to-br from-slate-800 via-slate-700 to-slate-800 relative">
-      <div className="flex justify-center items-center min-h-screen px-8 pt-20">
-        <div className="bg-gray-800 bg-opacity-90 backdrop-blur-lg p-12 rounded-2xl shadow-2xl text-center w-full max-w-md transition-all duration-300 hover:scale-105">
-          <h1 className="text-gold text-5xl font-bold tracking-wider uppercase mb-6">
+      <div className="flex justify-center items-center min-h-screen px-4 sm:px-8 pt-16 sm:pt-20">
+        <div className="bg-gray-800 bg-opacity-90 backdrop-blur-lg p-6 sm:p-12 rounded-2xl shadow-2xl text-center w-full max-w-md transition-all duration-300 hover:scale-105">
+          <h1 className="text-gold text-3xl sm:text-5xl font-bold tracking-wider uppercase mb-4 sm:mb-6">
             Web3 Node Merger
           </h1>
-          <p className="text-gray-300 text-lg mb-10">
+          <p className="text-gray-300 text-base sm:text-lg mb-6 sm:mb-10">
             Connect to Web3 node, protocol, token, merge management.
           </p>
 
