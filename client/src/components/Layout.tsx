@@ -177,12 +177,12 @@ export default function Layout() {
       {/* Main Content */}
       <div className="lg:ml-72 min-h-screen transition-all duration-300">
         {/* Header */}
-        <header className="bg-dark-navy bg-opacity-95 backdrop-blur-lg p-3 sm:p-6 border-b border-gray-600 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-4 sticky top-0 z-30">
+        <header className="bg-dark-navy bg-opacity-95 backdrop-blur-lg p-3 sm:p-6 border-b border-gray-600 flex justify-between items-center sticky top-0 z-30">
           <div className="flex-1 min-w-0">
             <h1 className="text-lg sm:text-2xl font-bold text-white truncate">Web3 Node Merger</h1>
             <p className="text-gray-400 text-xs sm:text-sm">Connect & manage your Web3 assets</p>
           </div>
-          <div className="flex items-center gap-2 sm:gap-4 flex-shrink-0">
+          <div className="flex items-center gap-2 sm:gap-4">
             <div className={walletStatus.className}>
               <div className={`w-2 h-2 ${walletStatus.dotColor} rounded-full`}></div>
               <span className="hidden sm:inline">{walletStatus.text}</span>

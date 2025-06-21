@@ -102,10 +102,21 @@ This is a modern full-stack Web3 application built with React, Express, and bloc
 - **Development Storage**: In-memory storage for rapid prototyping
 - **Production Ready**: PostgreSQL integration ready for scaling
 
-## Changelog
+## Recent Changes
 
-Changelog:
-- June 21, 2025. Initial setup
+- **June 21, 2025 - Mobile Optimization & Reorganization**
+  - Reorganized sections: Web3 Merger → Portfolio → Analytics → Platform → Footer
+  - Optimized mobile responsiveness across all components
+  - Added hamburger menu with close button for mobile navigation
+  - Made all action buttons redirect to Connect Wallet section
+  - Fixed header button positioning to top-right corner
+  - Added comprehensive footer with social links and security features
+  - Improved loading performance with optimized CSS and touch targets
+
+- **June 21, 2025 - Initial setup**
+  - Created Web3 platform with MetaMask integration
+  - Implemented multi-chain support (Ethereum, BSC, Polygon, Avalanche)
+  - Built responsive UI with Tailwind CSS
 
 ## User Preferences
 
