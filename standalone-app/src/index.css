@@ -1,0 +1,45 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  line-height: 1.6;
+  color: #333;
+  overflow-x: hidden;
+  background-color: #111;
+  color: #fff;
+}
+
+button, [role="button"] {
+  touch-action: manipulation;
+  min-height: 44px;
+  min-width: 44px;
+}
+
+.nav-item {
+  @apply flex items-center gap-3 p-3 mx-2 my-1 rounded-lg text-gray-300 hover:bg-orange-500 hover:bg-opacity-10 hover:text-orange-500 transition-all duration-300 cursor-pointer;
+}
+
+.nav-item.active {
+  @apply bg-orange-500 bg-opacity-10 text-orange-500;
+  transform: translateX(5px);
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #f6851b 0%, #ff9a56 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quick Wallet Test</title>
+    <script src="https://cdn.ethers.io/lib/ethers-5.7.2.umd.min.js"></script>
+</head>
+<body>
+    <h1>Quick Wallet Test</h1>
+    <button onclick="testWallet()">Test Wallet Connection</button>
+    <div id="result"></div>
+
+    <script>
+        async function testWallet() {
+            const result = document.getElementById('result');
+            
+            if (!window.ethereum) {
+                result.innerHTML = "❌ MetaMask not detected";
+                return;
+            }
+
+            try {
+                const provider = new ethers.providers.Web3Provider(window.ethereum);
+                const accounts = await provider.send("eth_requestAccounts", []);
+                const signer = provider.getSigner();
+                const address = await signer.getAddress();
+                const balance = await provider.getBalance(address);
+                
+                result.innerHTML = `
+                    ✅ Wallet Connected<br>
+                    Address: ${address}<br>
+                    Balance: ${ethers.utils.formatEther(balance)} ETH
+                `;
+            } catch (error) {
+                result.innerHTML = `❌ Error: ${error.message}`;
+            }
+        }
+    </script>
+</body>
+</html>
