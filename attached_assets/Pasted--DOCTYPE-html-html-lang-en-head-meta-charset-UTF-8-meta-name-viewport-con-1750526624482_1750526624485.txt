@@ -1,0 +1,1412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MetaMask Platform - Complete Solution</title>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: all 0.2s ease;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* MetaMask Variables */
+        :root {
+            --metamask-orange: #f6851b;
+            --dark-navy: #24272a;
+            --dark-blue: #2a2d31;
+            --royal-blue: #3c4043;
+        }
+
+        /* Wallet Connection State */
+        .wallet-connected .connect-btn {
+            background: #22c55e !important;
+            color: white !important;
+        }
+
+        .wallet-connected .connect-btn:hover {
+            background: #16a34a !important;
+        }
+
+        /* MetaMask Dashboard Section */
+        .metamask-section {
+            background: linear-gradient(135deg, #24272a 0%, #3c4043 50%, #2a2d31 100%);
+            color: white;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        .metamask-orange { color: #f6851b; }
+        .bg-metamask-orange { background-color: #f6851b; }
+        .hover-metamask-orange:hover { background-color: #e67e22; }
+
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 60;
+            background: #f6851b;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: none;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100vh;
+            width: 280px;
+            background: #2a2d31;
+            z-index: 50;
+            transform: translateX(0);
+            transition: transform 0.3s ease;
+            box-shadow: 4px 0 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 1px solid #444;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: #f6851b;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 24px;
+            margin: 4px 12px;
+            border-radius: 8px;
+            color: #ccc;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background: rgba(246, 133, 27, 0.1);
+            color: #f6851b;
+            transform: translateX(5px);
+        }
+
+        .account-section {
+            padding: 24px;
+        }
+
+        .account-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-bottom: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .account-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(5px);
+        }
+
+        .account-item.active {
+            background: rgba(246, 133, 27, 0.2);
+            border: 1px solid #f6851b;
+        }
+
+        .account-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 12px;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 280px;
+            min-height: 100vh;
+            transition: margin-left 0.3s ease;
+        }
+
+        .header {
+            background: rgba(36, 39, 42, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 24px;
+            border-bottom: 1px solid #444;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 40;
+        }
+
+        .connect-btn {
+            background: #f6851b;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(246, 133, 27, 0.3);
+        }
+
+        .connect-btn:hover {
+            background: #e67e22;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(246, 133, 27, 0.4);
+        }
+
+        .connect-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Dashboard Content */
+        .dashboard-content {
+            padding: 32px;
+        }
+
+        .hero-section {
+            margin-bottom: 48px;
+            text-align: center;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            line-height: 1.2;
+            background: linear-gradient(135deg, #f6851b 0%, #ff9a56 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: #ccc;
+            margin-bottom: 32px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .wallet-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 32px;
+        }
+
+        .wallet-status.disconnected {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+        }
+
+        .wallet-status.connected {
+            background: rgba(34, 197, 94, 0.2);
+            color: #22c55e;
+        }
+
+        .wallet-status.connecting {
+            background: rgba(59, 130, 246, 0.2);
+            color: #3b82f6;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-bottom: 48px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #2a2d31 0%, #3c4043 100%);
+            border: 1px solid #444;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            color: #ccc;
+            font-size: 0.875rem;
+        }
+
+        .balance-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            padding: 32px;
+            margin-bottom: 32px;
+            color: white;
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .balance-amount {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .balance-change {
+            font-size: 1rem;
+            opacity: 0.9;
+            margin-bottom: 24px;
+        }
+
+        .balance-actions {
+            display: flex;
+            gap: 16px;
+        }
+
+        .balance-btn {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 14px;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .balance-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Quick Actions */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 24px;
+            margin-bottom: 48px;
+        }
+
+        .action-card {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            color: #333;
+        }
+
+        .action-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .action-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+        }
+
+        .action-icon.buy { background: rgba(34, 197, 94, 0.1); color: #22c55e; }
+        .action-icon.swap { background: rgba(59, 130, 246, 0.1); color: #3b82f6; }
+        .action-icon.earn { background: rgba(147, 51, 234, 0.1); color: #9333ea; }
+        .action-icon.spend { background: rgba(246, 133, 27, 0.1); color: #f6851b; }
+
+        /* Crypto Platform Section */
+        .crypto-platform {
+            background: linear-gradient(135deg, #FF9A85 0%, #FF7A6B 100%);
+            padding: 80px 20px;
+            min-height: 100vh;
+        }
+
+        .platform-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+            gap: 32px;
+        }
+
+        .platform-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 24px;
+            padding: 40px;
+            padding-right: 180px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            min-height: 280px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .platform-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 32px 64px rgba(0, 0, 0, 0.15);
+        }
+
+        .platform-card h2 {
+            color: #2B3674;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            line-height: 1.2;
+        }
+
+        .platform-card p {
+            color: #2B3674;
+            font-size: 1.125rem;
+            margin-bottom: 24px;
+            opacity: 0.8;
+            line-height: 1.5;
+        }
+
+        .platform-btn {
+            background: white;
+            color: #2B3674;
+            border: none;
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            width: fit-content;
+        }
+
+        .platform-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+            background: #f8f9ff;
+        }
+
+        /* Card Graphics */
+        .card-graphic {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 160px;
+            height: 160px;
+            opacity: 0.9;
+        }
+
+        .buy-graphic {
+            background: linear-gradient(135deg, #FF6B35 0%, #F7931E 100%);
+            border-radius: 50% 20% 50% 20%;
+            position: relative;
+        }
+
+        .buy-graphic::before {
+            content: '';
+            position: absolute;
+            top: 25px;
+            left: 25px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #87CEEB 0%, #4682B4 100%);
+            border-radius: 50%;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .buy-graphic::after {
+            content: '';
+            position: absolute;
+            bottom: 30px;
+            right: 30px;
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #DDA0DD 0%, #9370DB 100%);
+            border-radius: 50%;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .swap-graphic {
+            background: linear-gradient(135deg, #20B2AA 0%, #48D1CC 100%);
+            border-radius: 20%;
+            transform: translateY(-50%) rotate(15deg);
+            position: relative;
+        }
+
+        .swap-graphic::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #FF69B4 0%, #FF1493 100%);
+            border-radius: 30% 70% 70% 30%;
+        }
+
+        .swap-graphic::after {
+            content: '';
+            position: absolute;
+            bottom: 25px;
+            left: 25px;
+            width: 35px;
+            height: 35px;
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            border-radius: 50%;
+        }
+
+        .earn-graphic {
+            background: linear-gradient(135deg, #9370DB 0%, #8A2BE2 100%);
+            border-radius: 30% 70% 30% 70%;
+            position: relative;
+        }
+
+        .earn-graphic::before {
+            content: '';
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, #FF7F50 0%, #FF6347 100%);
+            border-radius: 20% 80% 20% 80%;
+        }
+
+        .earn-graphic::after {
+            content: '';
+            position: absolute;
+            bottom: 40px;
+            right: 40px;
+            width: 30px;
+            height: 30px;
+            background: linear-gradient(135deg, #87CEEB 0%, #4682B4 100%);
+            border-radius: 50%;
+        }
+
+        .spend-graphic {
+            width: 140px;
+            height: 90px;
+            background: linear-gradient(135deg, #FF4500 0%, #DC143C 100%);
+            border-radius: 16px;
+            transform: translateY(-50%) rotate(-10deg);
+            position: relative;
+        }
+
+        .spend-graphic::before {
+            content: 'METAMASK';
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: white;
+            font-weight: 700;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+        }
+
+        .spend-graphic::after {
+            content: '';
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            width: 32px;
+            height: 22px;
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            border-radius: 4px;
+        }
+
+        /* Footer Styles */
+        .footer {
+            background: linear-gradient(135deg, #1a1d20 0%, #2a2d31 100%);
+            color: white;
+            padding: 60px 20px 30px;
+            border-top: 3px solid #f6851b;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .footer-description {
+            font-size: 1.125rem;
+            line-height: 1.6;
+            margin-bottom: 40px;
+            color: #e0e0e0;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .footer-contact {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #f6851b;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .contact-item:hover {
+            transform: translateY(-2px);
+            color: #ff9a56;
+        }
+
+        .contact-icon {
+            width: 24px;
+            height: 24px;
+            stroke: currentColor;
+            stroke-width: 2;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #3c4043;
+            padding-top: 30px;
+            color: #999;
+            font-size: 0.875rem;
+        }
+
+        /* Modal */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.show { display: flex; }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 32px 64px rgba(0, 0, 0, 0.2);
+            animation: modalSlideIn 0.3s ease;
+        }
+
+        @keyframes modalSlideIn {
+            from { opacity: 0; transform: translateY(-50px) scale(0.9); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .modal h3 {
+            color: #2B3674;
+            font-size: 1.75rem;
+            margin-bottom: 16px;
+            font-weight: 700;
+        }
+
+        .modal p {
+            color: #666;
+            margin-bottom: 32px;
+            font-size: 1.125rem;
+            line-height: 1.6;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 16px;
+        }
+
+        .modal-btn {
+            flex: 1;
+            padding: 16px;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            font-size: 1rem;
+        }
+
+        .modal-btn.secondary {
+            background: #f1f5f9;
+            color: #64748b;
+        }
+
+        .modal-btn.primary {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .modal-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            padding: 16px 24px;
+            border-radius: 12px;
+            color: white;
+            font-weight: 600;
+            z-index: 1001;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
+
+        .toast.show { transform: translateX(0); }
+        .toast.success { background: #10b981; }
+        .toast.error { background: #ef4444; }
+        .toast.info { background: #3b82f6; }
+
+        /* Loading Animation */
+        .loading-spinner {
+            width: 16px;
+            height: 16px;
+            border: 2px solid #ffffff40;
+            border-top: 2px solid #ffffff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .main-content { margin-left: 0; }
+            .sidebar { transform: translateX(-100%); }
+            .sidebar.open { transform: translateX(0); }
+            .mobile-menu-btn { display: block; }
+            .platform-container { grid-template-columns: 1fr; }
+            .platform-card { padding-right: 40px; }
+        }
+
+        @media (max-width: 768px) {
+            .hero-title { font-size: 2.5rem; }
+            .hero-subtitle { font-size: 1rem; }
+            .dashboard-content { padding: 20px; }
+            .balance-amount { font-size: 2.5rem; }
+            .platform-card { padding: 32px 24px; }
+            .platform-card h2 { font-size: 2rem; }
+            .card-graphic { width: 120px; height: 120px; right: 10px; }
+            .spend-graphic { width: 100px; height: 65px; }
+            .footer-contact { flex-direction: column; gap: 30px; }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title { font-size: 2rem; }
+            .platform-card h2 { font-size: 1.75rem; }
+            .balance-actions { flex-direction: column; }
+            .modal-buttons { flex-direction: column; }
+            .stats-grid { grid-template-columns: 1fr; }
+            .quick-actions { grid-template-columns: 1fr; }
+        }
+
+        /* Wallet Detection */
+        .wallet-not-found {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid #ef4444;
+            color: #ef4444;
+            padding: 16px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .wallet-not-found a {
+            color: #f6851b;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <!-- Mobile Menu Button -->
+    <button class="mobile-menu-btn" onclick="toggleSidebar()">
+        <i data-lucide="menu" width="20" height="20"></i>
+    </button>
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo-icon">
+                <i data-lucide="wallet" width="24" height="24" color="white"></i>
+            </div>
+            <h1 style="font-size: 1.5rem; font-weight: 700; color: white;">MetaMask</h1>
+        </div>
+
+        <nav style="padding: 24px 0;">
+            <a href="#dashboard" class="nav-item active" onclick="setActiveNav(this)">
+                <i data-lucide="layout-dashboard" width="20" height="20"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="#swap" class="nav-item" onclick="setActiveNav(this); showToast('Swap feature coming soon!', 'info')">
+                <i data-lucide="repeat" width="20" height="20"></i>
+                <span>Swap</span>
+            </a>
+            <a href="#discover" class="nav-item" onclick="setActiveNav(this); showToast('Discover feature coming soon!', 'info')">
+                <i data-lucide="compass" width="20" height="20"></i>
+                <span>Discover</span>
+            </a>
+            <a href="#card" class="nav-item" onclick="setActiveNav(this); showToast('Card feature coming soon!', 'info')">
+                <i data-lucide="credit-card" width="20" height="20"></i>
+                <span>Card</span>
+            </a>
+        </nav>
+
+        <div class="account-section">
+            <h3 style="color: #888; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px;">Accounts</h3>
+            <div class="account-item active" onclick="switchAccount(this, 'M', 'metamask.linea...', '$10,027.00')">
+                <div class="account-avatar">M</div>
+                <div style="flex: 1;">
+                    <div style="font-weight: 600; color: white; font-size: 0.875rem;">metamask.linea...</div>
+                    <div style="color: #888; font-size: 0.75rem;">$10,027.00</div>
+                </div>
+                <i data-lucide="check-circle" width="16" height="16" color="#22c55e"></i>
+            </div>
+            <div class="account-item" onclick="switchAccount(this, 'E', 'mask.eth', '$2,000.00')">
+                <div class="account-avatar" style="background: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);">E</div>
+                <div style="flex: 1;">
+                    <div style="font-weight: 600; color: white; font-size: 0.875rem;">mask.eth</div>
+                    <div style="color: #888; font-size: 0.75rem;">$2,000.00</div>
+                </div>
+            </div>
+            <div class="account-item" onclick="showToast('Add account feature coming soon!', 'info')">
+                <div class="account-avatar" style="background: #6b7280;">
+                    <i data-lucide="plus" width="16" height="16"></i>
+                </div>
+                <div style="flex: 1;">
+                    <div style="font-weight: 600; color: white; font-size: 0.875rem;">Add Account</div>
+                    <div style="color: #888; font-size: 0.75rem;">Create or import</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- MetaMask Dashboard Section -->
+        <div class="metamask-section">
+            <div class="header">
+                <h2 style="font-size: 1.5rem; font-weight: 600; color: #f6851b;">Dashboard</h2>
+                <button class="connect-btn" id="connectBtn" onclick="connectWallet()">
+                    <i data-lucide="wallet" width="16" height="16"></i>
+                    <span>CONNECT METAMASK</span>
+                </button>
+            </div>
+
+            <div class="dashboard-content">
+                <div class="hero-section">
+                    <h1 class="hero-title">Unlock the power of web3<br><span style="color: #f6851b;">self-custody</span></h1>
+                    <p class="hero-subtitle">Securely store, manage, and interact with your digital assets across blockchains.</p>
+                    
+                    <div class="wallet-status disconnected" id="walletStatus">
+                        <i data-lucide="alert-circle" width="16" height="16"></i>
+                        <span>Wallet Not Connected</span>
+                    </div>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                            <h3 style="color: #ccc; font-size: 1rem;">Total Portfolio</h3>
+                            <i data-lucide="trending-up" width="20" height="20" color="#22c55e"></i>
+                        </div>
+                        <div class="stat-value" id="portfolioValue">$12,027.00</div>
+                        <div style="color: #22c55e; font-size: 0.875rem;">+$234.56 (+2.3%)</div>
+                    </div>
+                    <div class="stat-card">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                            <h3 style="color: #ccc; font-size: 1rem;">Active Networks</h3>
+                            <i data-lucide="network" width="20" height="20" color="#3b82f6"></i>
+                        </div>
+                        <div class="stat-value">3</div>
+                        <div style="display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap;">
+                            <span style="padding: 4px 8px; background: #3b82f6; color: white; border-radius: 12px; font-size: 0.75rem;">Ethereum</span>
+                            <span style="padding: 4px 8px; background: #9333ea; color: white; border-radius: 12px; font-size: 0.75rem;">Polygon</span>
+                            <span style="padding: 4px 8px; background: #ea8c33; color: white; border-radius: 12px; font-size: 0.75rem;">BSC</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                            <h3 style="color: #ccc; font-size: 1rem;">Transactions</h3>
+                            <i data-lucide="activity" width="20" height="20" color="#f6851b"></i>
+                        </div>
+                        <div class="stat-value">127</div>
+                        <div style="color: #f6851b; font-size: 0.875rem;">This month</div>
+                    </div>
+                </div>
+
+                <div class="balance-section">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                        <h3 style="font-size: 1.125rem; font-weight: 600;">Total Balance</h3>
+                        <i data-lucide="eye" width="20" height="20" style="opacity: 0.8; cursor: pointer;" onclick="toggleBalanceVisibility()"></i>
+                    </div>
+                    <div class="balance-amount" id="balanceAmount">$10,027.00</div>
+                    <div class="balance-change">+$234.56 (+2.39%) today</div>
+                    <div class="balance-actions">
+                        <button class="balance-btn" onclick="showModal('buy')">
+                            <i data-lucide="plus" width="16" height="16"></i>
+                            <span>Add Funds</span>
+                        </button>
+                        <button class="balance-btn" onclick="showModal('send')">
+                            <i data-lucide="send" width="16" height="16"></i>
+                            <span>Send</span>
+                        </button>
+                        <button class="balance-btn" onclick="showModal('swap')">
+                            <i data-lucide="repeat" width="16" height="16"></i>
+                            <span>Swap</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="quick-actions">
+                    <div class="action-card" onclick="showModal('buy')">
+                        <div class="action-icon buy">
+                            <i data-lucide="shopping-cart" width="28" height="28"></i>
+                        </div>
+                        <h3 style="font-weight: 600; margin-bottom: 8px;">Buy Crypto</h3>
+                        <p style="color: #666; font-size: 0.875rem;">Purchase crypto with your card</p>
+                    </div>
+                    <div class="action-card" onclick="showModal('swap')">
+                        <div class="action-icon swap">
+                            <i data-lucide="repeat" width="28" height="28"></i>
+                        </div>
+                        <h3 style="font-weight: 600; margin-bottom: 8px;">Swap Tokens</h3>
+                        <p style="color: #666; font-size: 0.875rem;">Exchange tokens instantly</p>
+                    </div>
+                    <div class="action-card" onclick="showModal('earn')">
+                        <div class="action-icon earn">
+                            <i data-lucide="trending-up" width="28" height="28"></i>
+                        </div>
+                        <h3 style="font-weight: 600; margin-bottom: 8px;">Earn Rewards</h3>
+                        <p style="color: #666; font-size: 0.875rem;">Stake and earn passive income</p>
+                    </div>
+                    <div class="action-card" onclick="showModal('spend')">
+                        <div class="action-icon spend">
+                            <i data-lucide="credit-card" width="28" height="28"></i>
+                        </div>
+                        <h3 style="font-weight: 600; margin-bottom: 8px;">MetaMask Card</h3>
+                        <p style="color: #666; font-size: 0.875rem;">Spend crypto anywhere</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Crypto Platform Section -->
+        <div class="crypto-platform">
+            <div class="platform-container">
+                <div class="platform-card">
+                    <div>
+                        <h2>Buy and<br>sell crypto</h2>
+                        <p>Go from cash to crypto in seconds with our secure payment methods.</p>
+                        <button class="platform-btn" onclick="showModal('buy')">BUY NOW</button>
+                    </div>
+                    <div class="card-graphic buy-graphic"></div>
+                </div>
+
+                <div class="platform-card">
+                    <div>
+                        <h2>Swap and bridge<br>tokens</h2>
+                        <p>Easily swap thousands of tokens across dozens of networks with the best rates.</p>
+                        <button class="platform-btn" onclick="showModal('swap')">SWAP NOW</button>
+                    </div>
+                    <div class="card-graphic swap-graphic"></div>
+                </div>
+
+                <div class="platform-card">
+                    <div>
+                        <h2>Earn<br>rewards</h2>
+                        <p>Stake your ETH and earn rewards while securing the Ethereum network.</p>
+                        <button class="platform-btn" onclick="showModal('earn')">STAKE NOW</button>
+                    </div>
+                    <div class="card-graphic earn-graphic"></div>
+                </div>
+
+                <div class="platform-card">
+                    <div>
+                        <h2>Spend<br>crypto IRL</h2>
+                        <p>Use MetaMask Card to make purchases with your crypto anywhere that Mastercard is accepted.</p>
+                        <button class="platform-btn" onclick="showModal('spend')">GET CARD</button>
+                    </div>
+                    <div class="card-graphic spend-graphic"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <p class="footer-description">
+                    Your gateway to the decentralized web. MetaMask is a secure and user-friendly wallet that connects you to blockchain applications with complete self-custody of your digital assets.
+                </p>
+                <div class="footer-contact">
+                    <div class="contact-item">
+                        <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                            <polyline points="22,6 12,13 2,6"></polyline>
+                        </svg>
+                        <span>support@metamask.io</span>
+                    </div>
+                    <div class="contact-item">
+                        <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                        </svg>
+                        <span>metamask.io</span>
+                    </div>
+                    <div class="contact-item">
+                        <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                        </svg>
+                        <span>Join our community</span>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <p>&copy; 2024 MetaMask. All rights reserved. | Built with security and privacy in mind.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <h3 id="modal-title">Feature Title</h3>
+            <p id="modal-description">Feature description goes here.</p>
+            <div class="modal-buttons">
+                <button class="modal-btn secondary" onclick="closeModal()">Cancel</button>
+                <button class="modal-btn primary" onclick="closeModal()">Coming Soon</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global state
+        let walletConnected = false;
+        let currentAccount = null;
+        let balanceVisible = true;
+
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Modal content
+        const modalContent = {
+            buy: { title: 'Buy Crypto', description: 'Purchase cryptocurrency using your preferred payment method. Connect your wallet and choose from multiple payment options including credit card, bank transfer, and more.' },
+            swap: { title: 'Swap Tokens', description: 'Exchange tokens across multiple networks with the best rates. Our aggregator finds the optimal route for your swaps across all major DEXs.' },
+            earn: { title: 'Earn Rewards', description: 'Stake your tokens and earn passive income. Choose from various staking pools and earn rewards while helping secure the network.' },
+            spend: { title: 'MetaMask Card', description: 'Get your MetaMask Card and spend crypto anywhere Mastercard is accepted. Convert your crypto to fiat instantly at the point of sale.' },
+            send: { title: 'Send Crypto', description: 'Send cryptocurrency to any wallet address. Support for all major tokens and networks with real-time gas optimization.' }
+        };
+
+        // Wallet detection and connection
+        async function connectWallet() {
+            const btn = document.getElementById('connectBtn');
+            const originalContent = btn.innerHTML;
+            
+            // Show loading state
+            btn.disabled = true;
+            btn.innerHTML = '<div class="loading-spinner"></div><span>CONNECTING...</span>';
+            
+            try {
+                // Check if MetaMask is installed
+                if (typeof window.ethereum === 'undefined') {
+                    showWalletNotFoundError();
+                    btn.innerHTML = originalContent;
+                    btn.disabled = false;
+                    return;
+                }
+
+                // Update status to connecting
+                updateWalletStatus('connecting', 'Connecting to MetaMask...');
+
+                // Request account access
+                const accounts = await window.ethereum.request({
+                    method: 'eth_requestAccounts'
+                });
+
+                if (accounts.length > 0) {
+                    walletConnected = true;
+                    currentAccount = accounts[0];
+                    
+                    // Update UI for connected state
+                    document.body.classList.add('wallet-connected');
+                    btn.innerHTML = '<i data-lucide="check-circle" width="16" height="16"></i><span>CONNECTED</span>';
+                    btn.style.background = '#22c55e';
+                    
+                    updateWalletStatus('connected', `Connected: ${currentAccount.substring(0, 6)}...${currentAccount.substring(38)}`);
+                    
+                    // Get network info
+                    await getNetworkInfo();
+                    
+                    // Get balance
+                    await updateBalance();
+                    
+                    showToast('MetaMask connected successfully!', 'success');
+                    
+                    // Re-initialize icons
+                    lucide.createIcons();
+                }
+            } catch (error) {
+                console.error('Connection failed:', error);
+                btn.innerHTML = originalContent;
+                btn.disabled = false;
+                updateWalletStatus('disconnected', 'Connection failed');
+                showToast('Failed to connect wallet. Please try again.', 'error');
+            }
+        }
+
+        function showWalletNotFoundError() {
+            const heroSection = document.querySelector('.hero-section');
+            const existingError = document.querySelector('.wallet-not-found');
+            
+            if (!existingError) {
+                const errorDiv = document.createElement('div');
+                errorDiv.className = 'wallet-not-found';
+                errorDiv.innerHTML = `
+                    <strong>MetaMask Not Detected</strong><br>
+                    Please install MetaMask to connect your wallet. 
+                    <a href="https://metamask.io/download/" target="_blank">Download here</a>
+                `;
+                heroSection.appendChild(errorDiv);
+            }
+            
+            showToast('MetaMask not detected. Please install MetaMask extension.', 'error');
+        }
+
+        function updateWalletStatus(status, message) {
+            const statusEl = document.getElementById('walletStatus');
+            statusEl.className = `wallet-status ${status}`;
+            
+            let icon = 'alert-circle';
+            if (status === 'connected') icon = 'check-circle';
+            if (status === 'connecting') icon = 'loader';
+            
+            statusEl.innerHTML = `
+                <i data-lucide="${icon}" width="16" height="16"></i>
+                <span>${message}</span>
+            `;
+            lucide.createIcons();
+        }
+
+        async function getNetworkInfo() {
+            try {
+                const chainId = await window.ethereum.request({ method: 'eth_chainId' });
+                console.log('Connected to network:', chainId);
+            } catch (error) {
+                console.error('Failed to get network info:', error);
+            }
+        }
+
+        async function updateBalance() {
+            if (!currentAccount) return;
+            
+            try {
+                const balance = await window.ethereum.request({
+                    method: 'eth_getBalance',
+                    params: [currentAccount, 'latest']
+                });
+                
+                // Convert wei to ETH (simplified)
+                const ethBalance = parseInt(balance, 16) / Math.pow(10, 18);
+                const usdValue = ethBalance * 2400; // Approximate ETH price
+                
+                document.getElementById('portfolioValue').textContent = `$${usdValue.toFixed(2)}`;
+                document.getElementById('balanceAmount').textContent = `$${usdValue.toFixed(2)}`;
+            } catch (error) {
+                console.error('Failed to get balance:', error);
+            }
+        }
+
+        // Listen for account changes
+        if (typeof window.ethereum !== 'undefined') {
+            window.ethereum.on('accountsChanged', function (accounts) {
+                if (accounts.length === 0) {
+                    // User disconnected
+                    walletConnected = false;
+                    currentAccount = null;
+                    document.body.classList.remove('wallet-connected');
+                    updateWalletStatus('disconnected', 'Wallet Disconnected');
+                    document.getElementById('connectBtn').innerHTML = '<i data-lucide="wallet" width="16" height="16"></i><span>CONNECT METAMASK</span>';
+                    document.getElementById('connectBtn').style.background = '#f6851b';
+                    showToast('Wallet disconnected', 'info');
+                } else {
+                    // Account changed
+                    currentAccount = accounts[0];
+                    updateWalletStatus('connected', `Connected: ${currentAccount.substring(0, 6)}...${currentAccount.substring(38)}`);
+                    updateBalance();
+                    showToast('Account changed', 'info');
+                }
+                lucide.createIcons();
+            });
+
+            window.ethereum.on('chainChanged', function (chainId) {
+                showToast('Network changed', 'info');
+                getNetworkInfo();
+            });
+        }
+
+        // Sidebar functionality
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('open');
+        }
+
+        function setActiveNav(element) {
+            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+            element.classList.add('active');
+        }
+
+        function switchAccount(element, avatar, name, balance) {
+            document.querySelectorAll('.account-item').forEach(item => {
+                item.classList.remove('active');
+                const checkIcon = item.querySelector('i[data-lucide="check-circle"]');
+                if (checkIcon) checkIcon.remove();
+            });
+            
+            element.classList.add('active');
+            const checkIcon = document.createElement('i');
+            checkIcon.setAttribute('data-lucide', 'check-circle');
+            checkIcon.setAttribute('width', '16');
+            checkIcon.setAttribute('height', '16');
+            checkIcon.setAttribute('color', '#22c55e');
+            element.appendChild(checkIcon);
+            
+            lucide.createIcons();
+            showToast(`Switched to ${name}`, 'success');
+        }
+
+        // Modal functionality
+        function showModal(action) {
+            const content = modalContent[action] || modalContent.buy;
+            document.getElementById('modal-title').textContent = content.title;
+            document.getElementById('modal-description').textContent = content.description;
+            document.getElementById('modal').classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('modal').classList.remove('show');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Toast functionality
+        function showToast(message, type = 'info') {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.textContent = message;
+            toast.onclick = () => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 300);
+            };
+            
+            document.body.appendChild(toast);
+            
+            setTimeout(() => toast.classList.add('show'), 100);
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 300);
+            }, 4000);
+        }
+
+        // Balance visibility toggle
+        function toggleBalanceVisibility() {
+            balanceVisible = !balanceVisible;
+            const balanceEl = document.getElementById('balanceAmount');
+            const eyeIcon = document.querySelector('.balance-section i[data-lucide="eye"], .balance-section i[data-lucide="eye-off"]');
+            
+            if (balanceVisible) {
+                balanceEl.textContent = '$10,027.00';
+                eyeIcon.setAttribute('data-lucide', 'eye');
+            } else {
+                balanceEl.textContent = '••••••';
+                eyeIcon.setAttribute('data-lucide', 'eye-off');
+            }
+            lucide.createIcons();
+        }
+
+        // Event listeners
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
+
+        document.getElementById('modal').addEventListener('click', (e) => {
+            if (e.target.classList.contains('modal')) closeModal();
+        });
+
+        // Close sidebar on outside click (mobile)
+        document.addEventListener('click', (e) => {
+            const sidebar = document.getElementById('sidebar');
+            const mobileBtn = document.querySelector('.mobile-menu-btn');
+            
+            if (window.innerWidth <= 1024 && 
+                !sidebar.contains(e.target) && 
+                !mobileBtn.contains(e.target) &&
+                sidebar.classList.contains('open')) {
+                sidebar.classList.remove('open');
+            }
+        });
+
+        // Smooth scrolling for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add interactive animations for platform cards
+        document.querySelectorAll('.platform-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-8px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', function() {
+            lucide.createIcons();
+            
+            // Auto-connect if previously connected
+            if (typeof window.ethereum !== 'undefined' && localStorage.getItem('walletConnected') === 'true') {
+                setTimeout(() => {
+                    connectWallet();
+                }, 1000);
+            }
+            
+            // Show welcome message
+            setTimeout(() => {
+                showToast('Welcome to MetaMask Platform! Connect your wallet to get started.', 'info');
+            }, 2000);
+        });
+
+        // Re-initialize icons periodically to catch any dynamic content
+        setInterval(() => lucide.createIcons(), 2000);
+
+        // Save connection state
+        window.addEventListener('beforeunload', () => {
+            localStorage.setItem('walletConnected', walletConnected.toString());
+        });
+
+        // Performance optimization: Lazy load images and animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '50px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements for animation
+        document.querySelectorAll('.stat-card, .action-card, .platform-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
