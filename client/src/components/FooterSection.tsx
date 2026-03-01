@@ -12,7 +12,7 @@ export default function FooterSection() {
     {
       title: "Product",
       links: [
-        { name: "Web3 Merger", href: "#web3-merger" },
+        { name: "Web3 dashbord", href: "#web3-merger" },
         { name: "Portfolio", href: "#portfolio" },
         { name: "Analytics", href: "#analytics" },
         { name: "Platform", href: "#platform" }
@@ -58,7 +58,7 @@ export default function FooterSection() {
               <div className="w-10 h-10 sm:w-12 sm:h-12 bg-metamask-orange rounded-xl flex items-center justify-center">
                 <Globe size={20} className="sm:w-6 sm:h-6 text-white" />
               </div>
-              <h3 className="text-xl sm:text-2xl font-bold">MetaMask Platform</h3>
+              <h3 className="text-xl sm:text-2xl font-bold">Blockchain Platform</h3>
             </div>
             <p className="text-gray-400 mb-4 sm:mb-6 text-base sm:text-lg leading-relaxed">
               The ultimate Web3 platform for managing your crypto assets across multiple blockchain networks. 
@@ -132,7 +132,7 @@ export default function FooterSection() {
         <div className="border-t border-gray-800 pt-6 sm:pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-3 sm:gap-4">
             <div className="text-gray-400 text-xs sm:text-sm text-center md:text-left">
-              © 2025 MetaMask Platform. All rights reserved.
+              © 2026 Blockchain Platform. All rights reserved.
             </div>
             <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-6 text-xs sm:text-sm">
               <span className="text-gray-400 text-center">

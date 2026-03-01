@@ -117,7 +117,7 @@ export default function Layout() {
             className={`nav-item w-full text-left text-sm sm:text-base ${activeSection === 'web3-merger' ? 'active' : ''}`}
           >
             <Wallet size={18} className="sm:w-5 sm:h-5" />
-            Web3 Merger
+            Web3 Dashboard
           </button>
           <button
             onClick={() => scrollToSection('portfolio')}
@@ -179,7 +179,7 @@ export default function Layout() {
         {/* Header */}
         <header className="bg-dark-navy bg-opacity-95 backdrop-blur-lg p-3 sm:p-6 border-b border-gray-600 flex justify-between items-center sticky top-0 z-30">
           <div className="flex-1 min-w-0">
-            <h1 className="text-lg sm:text-2xl font-bold text-white truncate">Web3 Node Merger</h1>
+            <h1 className="text-lg sm:text-2xl font-bold text-white truncate">BLOCKCHAIN WEB3</h1>
             <p className="text-gray-400 text-xs sm:text-sm">Connect & manage your Web3 assets</p>
           </div>
           <div className="flex items-center gap-2 sm:gap-4">

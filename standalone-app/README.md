@@ -1,4 +1,4 @@
-# Web3 MetaMask Platform - Standalone Frontend
+# Web3 Blockchain Platform - Standalone Frontend
 
 ## Quick Start
 

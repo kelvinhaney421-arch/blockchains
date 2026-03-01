@@ -40,7 +40,7 @@ export default function PlatformSection({ scrollToSection }: PlatformSectionProp
     <section id="platform" className="min-h-screen bg-gradient-to-br from-orange-400 via-red-400 to-pink-400 p-4 sm:p-8 lg:p-20">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-8 sm:mb-16">
-          <h2 className="text-3xl sm:text-5xl font-bold text-white mb-4 sm:mb-6">MetaMask Platform</h2>
+          <h2 className="text-3xl sm:text-5xl font-bold text-white mb-4 sm:mb-6">Blockchain Platform</h2>
           <p className="text-base sm:text-xl text-white opacity-90 max-w-3xl mx-auto">
             Experience the future of decentralized finance with our comprehensive Web3 platform. 
             Connect, trade, and manage your digital assets with confidence.

@@ -478,7 +478,7 @@ function App() {
         <section id="platform" className="min-h-screen bg-gradient-to-br from-orange-400 via-red-400 to-pink-400 p-4 sm:p-8 lg:p-20">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-8 sm:mb-16">
-              <h2 className="text-3xl sm:text-5xl font-bold text-white mb-4 sm:mb-6">MetaMask Platform</h2>
+              <h2 className="text-3xl sm:text-5xl font-bold text-white mb-4 sm:mb-6">Blockchain Platform</h2>
               <p className="text-base sm:text-xl text-white opacity-90 max-w-3xl mx-auto">
                 Experience the future of decentralized finance with our comprehensive Web3 platform. 
                 Connect, trade, and manage your digital assets with confidence.
@@ -487,7 +487,7 @@ function App() {
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-8">
               {[
-                { title: "Secure Wallet Connection", description: "Connect your MetaMask wallet securely and manage multiple blockchain networks with ease.", buttonText: "Get Started" },
+                { title: "Secure Wallet Connection", description: "Connect your wallet securely and manage multiple blockchain networks with ease.", buttonText: "Get Started" },
                 { title: "Multi-Chain Support", description: "Trade across Ethereum, BSC, Polygon, and Avalanche networks seamlessly in one interface.", buttonText: "Explore Networks" },
                 { title: "Token Management", description: "Merge, swap, and optimize your token holdings with advanced portfolio management tools.", buttonText: "Manage Tokens" },
                 { title: "Advanced Analytics", description: "Track performance, analyze trends, and make informed decisions with real-time data insights.", buttonText: "View Analytics" }
@@ -526,7 +526,7 @@ function App() {
                   <div className="w-10 h-10 sm:w-12 sm:h-12 bg-orange-500 rounded-xl flex items-center justify-center">
                     <Globe size={20} className="sm:w-6 sm:h-6 text-white" />
                   </div>
-                  <h3 className="text-xl sm:text-2xl font-bold">MetaMask Platform</h3>
+                  <h3 className="text-xl sm:text-2xl font-bold">Blockchain Platform</h3>
                 </div>
                 <p className="text-gray-400 mb-4 sm:mb-6 text-base sm:text-lg leading-relaxed">
                   The ultimate Web3 platform for managing your crypto assets across multiple blockchain networks. 
@@ -642,7 +642,7 @@ function App() {
             <div className="border-t border-gray-800 pt-6 sm:pt-8">
               <div className="flex flex-col md:flex-row justify-between items-center gap-3 sm:gap-4">
                 <div className="text-gray-400 text-xs sm:text-sm text-center md:text-left">
-                  © 2025 MetaMask Platform. All rights reserved.
+                  © 2026 Blockchain Platform. All rights reserved.
                 </div>
                 <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-6 text-xs sm:text-sm">
                   <span className="text-gray-400 text-center">
