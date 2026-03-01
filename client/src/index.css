@@ -3,57 +3,56 @@
 @tailwind utilities;
 
 :root {
-  --background: hsl(0, 0%, 100%);
-  --foreground: hsl(20, 14.3%, 4.1%);
-  --muted: hsl(60, 4.8%, 95.9%);
-  --muted-foreground: hsl(25, 5.3%, 44.7%);
-  --popover: hsl(0, 0%, 100%);
-  --popover-foreground: hsl(20, 14.3%, 4.1%);
-  --card: hsl(0, 0%, 100%);
-  --card-foreground: hsl(20, 14.3%, 4.1%);
-  --border: hsl(20, 5.9%, 90%);
-  --input: hsl(20, 5.9%, 90%);
-  --primary: hsl(207, 90%, 54%);
-  --primary-foreground: hsl(211, 100%, 99%);
-  --secondary: hsl(60, 4.8%, 95.9%);
-  --secondary-foreground: hsl(24, 9.8%, 10%);
-  --accent: hsl(60, 4.8%, 95.9%);
-  --accent-foreground: hsl(24, 9.8%, 10%);
-  --destructive: hsl(0, 84.2%, 60.2%);
-  --destructive-foreground: hsl(60, 9.1%, 97.8%);
-  --ring: hsl(20, 14.3%, 4.1%);
-  --radius: 0.5rem;
+  --background: hsl(230, 25%, 5%);
+  --foreground: hsl(180, 100%, 90%);
+  --muted: hsl(230, 25%, 10%);
+  --muted-foreground: hsl(180, 50%, 60%);
+  --popover: hsl(230, 25%, 7%);
+  --popover-foreground: hsl(180, 100%, 90%);
+  --card: hsl(230, 25%, 8%);
+  --card-foreground: hsl(180, 100%, 90%);
+  --border: hsl(180, 100%, 20%);
+  --input: hsl(180, 100%, 15%);
+  --primary: hsl(180, 100%, 50%);
+  --primary-foreground: hsl(180, 100%, 5%);
+  --secondary: hsl(280, 100%, 60%);
+  --secondary-foreground: hsl(280, 100%, 98%);
+  --accent: hsl(180, 100%, 50%);
+  --accent-foreground: hsl(180, 100%, 5%);
+  --destructive: hsl(0, 100%, 50%);
+  --destructive-foreground: hsl(0, 0%, 100%);
+  --ring: hsl(180, 100%, 50%);
+  --radius: 0px;
   
-  /* Custom MetaMask colors */
-  --metamask-orange: hsl(22, 93%, 54%);
-  --dark-navy: hsl(210, 8%, 14%);
-  --dark-blue: hsl(210, 8%, 18%);
-  --royal-blue: hsl(210, 8%, 25%);
-  --gold: hsl(51, 100%, 50%);
-  --gold-dark: hsl(48, 96%, 40%);
+  /* Custom Cyber Colors */
+  --metamask-orange: hsl(180, 100%, 50%);
+  --dark-navy: hsl(230, 25%, 7%);
+  --dark-blue: hsl(230, 25%, 10%);
+  --royal-blue: hsl(230, 25%, 15%);
+  --gold: hsl(180, 100%, 50%);
+  --gold-dark: hsl(180, 100%, 40%);
 }
 
 .dark {
-  --background: hsl(240, 10%, 3.9%);
-  --foreground: hsl(0, 0%, 98%);
-  --muted: hsl(240, 3.7%, 15.9%);
-  --muted-foreground: hsl(240, 5%, 64.9%);
-  --popover: hsl(240, 10%, 3.9%);
-  --popover-foreground: hsl(0, 0%, 98%);
-  --card: hsl(240, 10%, 3.9%);
-  --card-foreground: hsl(0, 0%, 98%);
-  --border: hsl(240, 3.7%, 15.9%);
-  --input: hsl(240, 3.7%, 15.9%);
-  --primary: hsl(207, 90%, 54%);
-  --primary-foreground: hsl(211, 100%, 99%);
-  --secondary: hsl(240, 3.7%, 15.9%);
+  --background: hsl(230, 25%, 5%);
+  --foreground: hsl(180, 100%, 90%);
+  --muted: hsl(230, 25%, 10%);
+  --muted-foreground: hsl(180, 50%, 60%);
+  --popover: hsl(230, 25%, 3.9%);
+  --popover-foreground: hsl(180, 100%, 90%);
+  --card: hsl(230, 25%, 8%);
+  --card-foreground: hsl(180, 100%, 90%);
+  --border: hsl(180, 100%, 20%);
+  --input: hsl(180, 100%, 15%);
+  --primary: hsl(180, 100%, 50%);
+  --primary-foreground: hsl(180, 100%, 5%);
+  --secondary: hsl(230, 25%, 15.9%);
   --secondary-foreground: hsl(0, 0%, 98%);
-  --accent: hsl(240, 3.7%, 15.9%);
+  --accent: hsl(230, 25%, 15.9%);
   --accent-foreground: hsl(0, 0%, 98%);
   --destructive: hsl(0, 62.8%, 30.6%);
   --destructive-foreground: hsl(0, 0%, 98%);
-  --ring: hsl(240, 4.9%, 83.9%);
-  --radius: 0.5rem;
+  --ring: hsl(180, 100%, 83.9%);
 }
 
 @layer base {
@@ -63,7 +62,11 @@
 
   body {
     @apply font-sans antialiased bg-background text-foreground;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: 'Space Grotesk', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-image: 
+      radial-gradient(circle at 50% 50%, hsla(180, 100%, 50%, 0.05) 0%, transparent 50%),
+      linear-gradient(to bottom, var(--background), var(--background));
+    background-attachment: fixed;
   }
 
   html {
@@ -72,6 +75,19 @@
 }
 
 @layer components {
+  .cyber-card {
+    @apply relative border backdrop-blur-md overflow-hidden;
+    background-color: hsla(230, 25%, 8%, 0.5);
+    border-color: hsl(180, 100%, 50%);
+    clip-path: polygon(0 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%);
+  }
+
+  .cyber-button {
+    @apply relative px-6 py-2 bg-primary text-primary-foreground font-bold uppercase tracking-wider transition-all duration-300 active:scale-95;
+    box-shadow: 0 0 15px hsla(180, 100%, 50%, 0.4);
+    clip-path: polygon(10% 0, 100% 0, 100% 70%, 90% 100%, 0 100%, 0 30%);
+  }
+
   .metamask-orange {
     color: hsl(var(--metamask-orange));
   }
@@ -81,7 +97,7 @@
   }
   
   .hover-metamask-orange:hover {
-    background-color: hsl(22, 93%, 48%);
+    background-color: hsla(180, 100%, 50%, 0.8);
   }
   
   .bg-dark-navy {
@@ -113,7 +129,7 @@
   }
   
   .gradient-text {
-    background: linear-gradient(135deg, hsl(var(--metamask-orange)) 0%, hsl(22, 93%, 60%) 100%);
+    background: linear-gradient(135deg, hsl(180, 100%, 50%) 0%, hsl(280, 100%, 60%) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;

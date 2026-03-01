@@ -45,54 +45,65 @@ export default function Web3NodeMerger() {
   };
 
   return (
-    <section id="web3-merger" className="min-h-screen bg-gradient-to-br from-slate-800 via-slate-700 to-slate-800 relative">
+    <section id="web3-merger" className="min-h-screen bg-background relative overflow-hidden">
+      <div className="absolute inset-0 bg-[linear-gradient(rgba(0,255,255,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(0,255,255,0.05)_1px,transparent_1px)] bg-[size:50px_50px] [mask-image:radial-gradient(ellipse_at_center,black,transparent)] pointer-events-none"></div>
+      
       <div className="flex justify-center items-center min-h-screen px-4 sm:px-8 pt-16 sm:pt-20">
-        <div className="bg-gray-800 bg-opacity-90 backdrop-blur-lg p-6 sm:p-12 rounded-2xl shadow-2xl text-center w-full max-w-md transition-all duration-300 hover:scale-105">
-          <h1 className="text-gold text-3xl sm:text-5xl font-bold tracking-wider uppercase mb-4 sm:mb-6">
-           BLOCKCHAIN Web3 MANAGEMENT PLATFORM
+        <div className="cyber-card p-6 sm:p-12 text-center w-full max-w-md transition-all duration-500 hover:shadow-[0_0_50px_rgba(0,255,255,0.15)] group">
+          <div className="absolute top-0 right-0 p-2 text-[10px] font-mono text-primary/40 opacity-0 group-hover:opacity-100 transition-opacity">SECURE_NODE_v4.0.2</div>
+          
+          <h1 className="gradient-text text-3xl sm:text-5xl font-black tracking-tighter uppercase mb-4 sm:mb-6 neon-text">
+           TERMINAL ACCESS
           </h1>
-          <p className="text-gray-300 text-base sm:text-lg mb-6 sm:mb-10">
-            Connect to Web3 node, protocol, token, merge management.
+          <p className="text-muted-foreground text-sm sm:text-base mb-6 sm:mb-10 font-mono uppercase tracking-widest">
+            Cross-chain protocol bridge active.
           </p>
 
           <select
-            className="bg-gray-700 text-gold p-4 w-full rounded-lg border-2 border-gold-dark text-lg font-medium mb-10 cursor-pointer focus:outline-none focus:ring-2 focus:ring-orange-500"
+            className="bg-background/80 text-primary p-4 w-full rounded-none border-b-2 border-primary/50 text-lg font-bold mb-10 cursor-pointer focus:outline-none focus:border-primary transition-colors uppercase tracking-widest font-mono"
             value={selectedNetwork}
             onChange={handleNetworkChange}
           >
-            <option value="bnb">BNB Smart Chain</option>
-            <option value="ethereum">Ethereum</option>
-            <option value="polygon">Polygon</option>
-            <option value="avalanche">Avalanche</option>
+            <option value="bnb">BSC_CHAIN_NET</option>
+            <option value="ethereum">ETH_MAIN_NET</option>
+            <option value="polygon">PLY_L2_NET</option>
+            <option value="avalanche">AVAX_C_NET</option>
           </select>
 
           {!walletConnected ? (
             <button
-              className="p-4 bg-gray-700 text-gold font-bold text-lg border border-gold rounded-lg w-full cursor-pointer transition-all duration-300 hover:bg-orange-500 hover:text-gray-900 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="cyber-button w-full h-16 text-xl font-black tracking-[0.2em] disabled:opacity-50 disabled:cursor-not-allowed"
               onClick={handleConnect}
               disabled={connecting}
+              style={{ clipPath: "polygon(10% 0, 100% 0, 100% 70%, 90% 100%, 0 100%, 0 30%)" }}
             >
-              {connecting ? "Connecting..." : "Connect Wallet"}
+              {connecting ? "SYNCING..." : "INIT_CONNECT"}
             </button>
           ) : (
-            <div className="bg-orange-500 bg-opacity-5 p-6 border border-gold rounded-xl">
-              <p className="mb-3 text-base">
-                <strong className="text-gold">Wallet:</strong>
-                <span className="text-white block text-sm font-mono mt-1">
-                  {account.slice(0, 6)}...{account.slice(-4)}
-                </span>
-              </p>
-              <p className="mb-6 text-base">
-                <strong className="text-gold">Balance:</strong>
-                <span className="text-white">
-                  {" "}{parseFloat(balance).toFixed(4)} {NETWORKS[selectedNetwork as keyof typeof NETWORKS].symbol}
-                </span>
-              </p>
+            <div className="bg-primary/5 p-6 border border-primary relative">
+              <div className="absolute -top-3 -left-3 w-6 h-6 border-t-2 border-l-2 border-primary"></div>
+              <div className="absolute -bottom-3 -right-3 w-6 h-6 border-b-2 border-r-2 border-primary"></div>
+              
+              <div className="mb-4 text-left font-mono">
+                <div className="text-[10px] text-primary/60 uppercase mb-1">Authenticated_Session</div>
+                <div className="text-primary text-sm break-all font-bold">
+                  {account}
+                </div>
+              </div>
+              
+              <div className="mb-8 text-left font-mono">
+                <div className="text-[10px] text-primary/60 uppercase mb-1">Asset_Liquidity</div>
+                <div className="text-2xl font-black text-white tracking-tighter">
+                  {parseFloat(balance).toFixed(4)} <span className="text-primary">{NETWORKS[selectedNetwork as keyof typeof NETWORKS].symbol}</span>
+                </div>
+              </div>
+
               <button
-                className="p-4 bg-gray-700 text-gold font-bold text-lg border border-gold rounded-lg w-full cursor-pointer transition-all duration-300 hover:bg-orange-500 hover:text-gray-900"
+                className="cyber-button w-full h-14 text-lg font-black tracking-widest"
                 onClick={handleMerge}
+                style={{ clipPath: "polygon(10% 0, 100% 0, 100% 70%, 90% 100%, 0 100%, 0 30%)" }}
               >
-                Merge Wallet
+                EXECUTE_MERGE
               </button>
             </div>
           )}
