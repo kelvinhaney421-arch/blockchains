@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useWeb3 } from "../hooks/useWeb3";
 import { useToast } from "@/hooks/use-toast";
+import { TrendingUp } from "lucide-react";
 
 export default function Web3NodeMerger() {
   const { 
@@ -45,68 +46,70 @@ export default function Web3NodeMerger() {
   };
 
   return (
-    <section id="web3-merger" className="min-h-screen bg-background relative overflow-hidden">
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(0,255,255,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(0,255,255,0.05)_1px,transparent_1px)] bg-[size:50px_50px] [mask-image:radial-gradient(ellipse_at_center,black,transparent)] pointer-events-none"></div>
-      
-      <div className="flex justify-center items-center min-h-screen px-4 sm:px-8 pt-16 sm:pt-20">
-        <div className="cyber-card p-6 sm:p-12 text-center w-full max-w-md transition-all duration-500 hover:shadow-[0_0_50px_rgba(0,255,255,0.15)] group">
-          <div className="absolute top-0 right-0 p-2 text-[10px] font-mono text-primary/40 opacity-0 group-hover:opacity-100 transition-opacity">SECURE_NODE_v4.0.2</div>
+    <section id="web3-merger" className="min-h-screen bg-background p-6 flex items-center justify-center">
+      <div className="max-w-xl w-full">
+        <div className="rounded-3xl border bg-card/50 backdrop-blur-2xl p-8 sm:p-12 shadow-2xl shadow-black/5 text-center relative overflow-hidden transition-all duration-500 hover:shadow-primary/5">
+          <div className="absolute -top-24 -right-24 w-48 h-48 bg-primary/5 rounded-full blur-3xl"></div>
           
-          <h1 className="gradient-text text-3xl sm:text-5xl font-black tracking-tighter uppercase mb-4 sm:mb-6 neon-text">
-           TERMINAL ACCESS
+          <h1 className="text-4xl sm:text-6xl font-bold tracking-tight mb-6 text-foreground">
+            Blockchain <span className="gradient-text">Management</span>
           </h1>
-          <p className="text-muted-foreground text-sm sm:text-base mb-6 sm:mb-10 font-mono uppercase tracking-widest">
-            Cross-chain protocol bridge active.
+          <p className="text-muted-foreground text-lg mb-10 font-medium">
+            The sophisticated way to bridge cross-chain assets.
           </p>
 
-          <select
-            className="bg-background/80 text-primary p-4 w-full rounded-none border-b-2 border-primary/50 text-lg font-bold mb-10 cursor-pointer focus:outline-none focus:border-primary transition-colors uppercase tracking-widest font-mono"
-            value={selectedNetwork}
-            onChange={handleNetworkChange}
-          >
-            <option value="bnb">BSC_CHAIN_NET</option>
-            <option value="ethereum">ETH_MAIN_NET</option>
-            <option value="polygon">PLY_L2_NET</option>
-            <option value="avalanche">AVAX_C_NET</option>
-          </select>
-
-          {!walletConnected ? (
-            <button
-              className="cyber-button w-full h-16 text-xl font-black tracking-[0.2em] disabled:opacity-50 disabled:cursor-not-allowed"
-              onClick={handleConnect}
-              disabled={connecting}
-              style={{ clipPath: "polygon(10% 0, 100% 0, 100% 70%, 90% 100%, 0 100%, 0 30%)" }}
-            >
-              {connecting ? "SYNCING..." : "INIT_CONNECT"}
-            </button>
-          ) : (
-            <div className="bg-primary/5 p-6 border border-primary relative">
-              <div className="absolute -top-3 -left-3 w-6 h-6 border-t-2 border-l-2 border-primary"></div>
-              <div className="absolute -bottom-3 -right-3 w-6 h-6 border-b-2 border-r-2 border-primary"></div>
-              
-              <div className="mb-4 text-left font-mono">
-                <div className="text-[10px] text-primary/60 uppercase mb-1">Authenticated_Session</div>
-                <div className="text-primary text-sm break-all font-bold">
-                  {account}
-                </div>
-              </div>
-              
-              <div className="mb-8 text-left font-mono">
-                <div className="text-[10px] text-primary/60 uppercase mb-1">Asset_Liquidity</div>
-                <div className="text-2xl font-black text-white tracking-tighter">
-                  {parseFloat(balance).toFixed(4)} <span className="text-primary">{NETWORKS[selectedNetwork as keyof typeof NETWORKS].symbol}</span>
-                </div>
-              </div>
-
-              <button
-                className="cyber-button w-full h-14 text-lg font-black tracking-widest"
-                onClick={handleMerge}
-                style={{ clipPath: "polygon(10% 0, 100% 0, 100% 70%, 90% 100%, 0 100%, 0 30%)" }}
+          <div className="space-y-6">
+            <div className="relative">
+              <select
+                className="w-full h-14 bg-accent/50 text-foreground px-6 rounded-2xl border border-border/50 text-lg font-semibold focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all appearance-none cursor-pointer"
+                value={selectedNetwork}
+                onChange={handleNetworkChange}
               >
-                EXECUTE_MERGE
-              </button>
+                <option value="bnb">BNB Smart Chain</option>
+                <option value="ethereum">Ethereum Mainnet</option>
+                <option value="polygon">Polygon POS</option>
+                <option value="avalanche">Avalanche C-Chain</option>
+              </select>
+              <div className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none text-muted-foreground">
+                <TrendingUp size={18} />
+              </div>
             </div>
-          )}
+
+            {!walletConnected ? (
+              <button
+                className="premium-button w-full h-14 text-xl"
+                onClick={handleConnect}
+                disabled={connecting}
+              >
+                {connecting ? "Syncing..." : "Connect Wallet"}
+              </button>
+            ) : (
+              <div className="rounded-2xl border bg-primary/5 p-8 relative group transition-all duration-300 hover:bg-primary/10">
+                <div className="text-left space-y-6">
+                  <div>
+                    <label className="text-xs font-bold uppercase tracking-widest text-primary/60 mb-2 block">Active Session</label>
+                    <div className="text-lg font-mono font-bold break-all bg-background/50 p-4 rounded-xl border border-border/50 text-foreground">
+                      {account}
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <label className="text-xs font-bold uppercase tracking-widest text-primary/60 mb-2 block">Total Balance</label>
+                    <div className="text-4xl font-bold tracking-tight text-foreground">
+                      {parseFloat(balance).toFixed(4)} <span className="text-primary text-2xl font-bold">{NETWORKS[selectedNetwork as keyof typeof NETWORKS].symbol}</span>
+                    </div>
+                  </div>
+
+                  <button
+                    className="premium-button w-full h-14 text-lg"
+                    onClick={handleMerge}
+                  >
+                    Execute Asset Merge
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </section>

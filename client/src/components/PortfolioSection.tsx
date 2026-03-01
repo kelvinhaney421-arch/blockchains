@@ -41,80 +41,78 @@ export default function PortfolioSection({ scrollToSection }: PortfolioSectionPr
   ];
 
   return (
-    <section id="portfolio" className="min-h-screen bg-background p-4 sm:p-8 lg:p-20 relative overflow-hidden">
-      <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl pointer-events-none"></div>
-      <div className="max-w-6xl mx-auto relative">
-        <div className="text-center mb-8 sm:mb-16">
-          <h2 className="text-3xl sm:text-5xl font-black text-primary mb-4 sm:mb-6 uppercase tracking-tighter neon-text">Asset_Matrix</h2>
-          <p className="text-base sm:text-xl text-muted-foreground max-w-3xl mx-auto font-mono uppercase tracking-widest">
-            Real-time synchronization with global node network
+    <section id="portfolio" className="min-h-screen bg-background p-8 lg:p-20 relative">
+      <div className="max-w-6xl mx-auto">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl sm:text-6xl font-bold tracking-tight mb-6">Portfolio <span className="gradient-text">Intelligence</span></h2>
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto font-medium">
+            Real-time insights into your cross-chain asset distribution.
           </p>
         </div>
 
         {/* Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-8 mb-8 sm:mb-16">
-          <div className="cyber-card p-4 sm:p-8 group hover:border-primary transition-colors">
-            <div className="text-2xl sm:text-4xl font-black text-white mb-2 font-mono tracking-tighter">$0.00</div>
-            <div className="text-primary/60 text-xs sm:text-sm font-mono uppercase">Net_Capital_Value</div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+          <div className="rounded-3xl border bg-card p-8 shadow-sm transition-all hover:shadow-lg hover:shadow-black/5 group">
+            <div className="text-4xl font-bold tracking-tight mb-2">$0.00</div>
+            <div className="text-muted-foreground text-sm font-semibold uppercase tracking-wider group-hover:text-primary transition-colors">Total Net Value</div>
           </div>
-          <div className="cyber-card p-4 sm:p-8 group hover:border-primary transition-colors">
-            <div className="text-2xl sm:text-4xl font-black text-primary mb-2 font-mono tracking-tighter">+0.00%</div>
-            <div className="text-primary/60 text-xs sm:text-sm font-mono uppercase">Delta_24H_Shift</div>
+          <div className="rounded-3xl border bg-card p-8 shadow-sm transition-all hover:shadow-lg hover:shadow-black/5 group">
+            <div className="text-4xl font-bold tracking-tight text-green-500 mb-2">+0.00%</div>
+            <div className="text-muted-foreground text-sm font-semibold uppercase tracking-wider group-hover:text-green-500 transition-colors">24h Trajectory</div>
           </div>
-          <div className="cyber-card p-4 sm:p-8 group hover:border-primary transition-colors">
-            <div className="text-2xl sm:text-4xl font-black text-secondary mb-2 font-mono tracking-tighter">0</div>
-            <div className="text-primary/60 text-xs sm:text-sm font-mono uppercase">Active_Node_Relays</div>
+          <div className="rounded-3xl border bg-card p-8 shadow-sm transition-all hover:shadow-lg hover:shadow-black/5 group">
+            <div className="text-4xl font-bold tracking-tight text-blue-500 mb-2">0</div>
+            <div className="text-muted-foreground text-sm font-semibold uppercase tracking-wider group-hover:text-blue-500 transition-colors">Active Protocol Relays</div>
           </div>
         </div>
 
         {/* Balance Section */}
-        <div className="cyber-card p-6 sm:p-12 mb-12 border-primary/40 bg-primary/5 relative overflow-hidden">
-          <div className="absolute top-0 right-0 p-4 font-mono text-[10px] text-primary/30">ENCRYPTED_DATA_STREAM</div>
-          <div className="text-3xl sm:text-6xl font-black mb-2 text-white tracking-tighter font-mono">0.00 <span className="text-primary">ETH</span></div>
-          <div className="text-base sm:text-lg text-primary/60 mb-6 sm:mb-8 font-mono">EST_VAL: $0.00_USD</div>
-          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-            <button 
-              onClick={() => scrollToSection?.('web3-merger')}
-              className="cyber-button flex-1"
-              style={{ clipPath: "polygon(10% 0, 100% 0, 100% 70%, 90% 100%, 0 100%, 0 30%)" }}
-            >
-              <Plus size={18} className="sm:w-5 sm:h-5" />
-              ACQUIRE
-            </button>
-            <button 
-              onClick={() => scrollToSection?.('web3-merger')}
-              className="cyber-button flex-1 bg-transparent border-2 border-primary text-primary hover:bg-primary/10"
-              style={{ clipPath: "polygon(10% 0, 100% 0, 100% 70%, 90% 100%, 0 100%, 0 30%)" }}
-            >
-              <Send size={18} className="sm:w-5 sm:h-5" />
-              TRANSMIT
-            </button>
-            <button 
-              onClick={() => scrollToSection?.('web3-merger')}
-              className="cyber-button flex-1 bg-secondary text-secondary-foreground"
-              style={{ clipPath: "polygon(10% 0, 100% 0, 100% 70%, 90% 100%, 0 100%, 0 30%)" }}
-            >
-              <Bookmark size={18} className="sm:w-5 sm:h-5" />
-              STAKE_NODE
-            </button>
+        <div className="rounded-[2.5rem] p-12 mb-16 bg-gradient-to-br from-primary to-blue-600 text-white shadow-2xl shadow-primary/20 relative overflow-hidden group">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl transition-transform group-hover:scale-110"></div>
+          <div className="relative">
+            <div className="text-5xl sm:text-7xl font-bold tracking-tighter mb-4">0.00 <span className="opacity-70">ETH</span></div>
+            <div className="text-xl opacity-80 mb-12 font-medium">Equiv: $0.00 USD</div>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <button 
+                onClick={() => scrollToSection?.('web3-merger')}
+                className="h-14 px-10 bg-white text-primary font-bold rounded-2xl hover:bg-opacity-90 transition-all active:scale-95 flex items-center justify-center gap-2"
+              >
+                <Plus size={20} />
+                Acquire
+              </button>
+              <button 
+                onClick={() => scrollToSection?.('web3-merger')}
+                className="h-14 px-10 bg-white/20 backdrop-blur-md text-white font-bold rounded-2xl hover:bg-white/30 transition-all active:scale-95 flex items-center justify-center gap-2"
+              >
+                <Send size={20} />
+                Transmit
+              </button>
+              <button 
+                onClick={() => scrollToSection?.('web3-merger')}
+                className="h-14 px-10 bg-white/20 backdrop-blur-md text-white font-bold rounded-2xl hover:bg-white/30 transition-all active:scale-95 flex items-center justify-center gap-2"
+              >
+                <Bookmark size={20} />
+                Stake
+              </button>
+            </div>
           </div>
         </div>
 
         {/* Quick Actions */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {quickActions.map((action, index) => {
             const IconComponent = action.icon;
             return (
               <div 
                 key={index}
                 onClick={() => scrollToSection?.('web3-merger')}
-                className="cyber-card p-4 sm:p-8 text-center cursor-pointer group hover:bg-primary/10 transition-all duration-300"
+                className="rounded-3xl border bg-card p-8 text-center cursor-pointer group hover:bg-accent transition-all duration-300"
               >
-                <div className={`w-10 h-10 sm:w-14 sm:h-14 bg-primary/10 text-primary rounded-none flex items-center justify-center mx-auto mb-3 sm:mb-4 border border-primary/20`} style={{ clipPath: "polygon(20% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0% 20%)" }}>
-                  <IconComponent size={20} className="sm:w-6 sm:h-6" />
+                <div className={`w-16 h-16 bg-primary/10 text-primary rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform`}>
+                  <IconComponent size={28} />
                 </div>
-                <h3 className="text-lg sm:text-xl font-black text-white mb-2 font-mono uppercase tracking-tighter group-hover:text-primary transition-colors">{action.title.replace(' ', '_')}</h3>
-                <p className="text-xs sm:text-sm text-primary/60 font-mono uppercase tracking-widest leading-tight">{action.description}</p>
+                <h3 className="text-xl font-bold mb-2 group-hover:text-primary transition-colors">{action.title}</h3>
+                <p className="text-muted-foreground text-sm font-medium leading-relaxed">{action.description}</p>
               </div>
             );
           })}

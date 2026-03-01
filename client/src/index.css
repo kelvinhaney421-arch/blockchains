@@ -3,56 +3,44 @@
 @tailwind utilities;
 
 :root {
-  --background: hsl(230, 25%, 5%);
-  --foreground: hsl(180, 100%, 90%);
-  --muted: hsl(230, 25%, 10%);
-  --muted-foreground: hsl(180, 50%, 60%);
-  --popover: hsl(230, 25%, 7%);
-  --popover-foreground: hsl(180, 100%, 90%);
-  --card: hsl(230, 25%, 8%);
-  --card-foreground: hsl(180, 100%, 90%);
-  --border: hsl(180, 100%, 20%);
-  --input: hsl(180, 100%, 15%);
-  --primary: hsl(180, 100%, 50%);
-  --primary-foreground: hsl(180, 100%, 5%);
-  --secondary: hsl(280, 100%, 60%);
-  --secondary-foreground: hsl(280, 100%, 98%);
-  --accent: hsl(180, 100%, 50%);
-  --accent-foreground: hsl(180, 100%, 5%);
-  --destructive: hsl(0, 100%, 50%);
-  --destructive-foreground: hsl(0, 0%, 100%);
-  --ring: hsl(180, 100%, 50%);
-  --radius: 0px;
-  
-  /* Custom Cyber Colors */
-  --metamask-orange: hsl(180, 100%, 50%);
-  --dark-navy: hsl(230, 25%, 7%);
-  --dark-blue: hsl(230, 25%, 10%);
-  --royal-blue: hsl(230, 25%, 15%);
-  --gold: hsl(180, 100%, 50%);
-  --gold-dark: hsl(180, 100%, 40%);
+  --background: 220 20% 97%;
+  --foreground: 220 40% 10%;
+  --muted: 220 20% 92%;
+  --muted-foreground: 220 10% 40%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 220 40% 10%;
+  --card: 0 0% 100%;
+  --card-foreground: 220 40% 10%;
+  --border: 220 20% 88%;
+  --input: 220 20% 88%;
+  --primary: 210 100% 50%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 220 20% 94%;
+  --secondary-foreground: 220 40% 10%;
+  --accent: 210 100% 96%;
+  --accent-foreground: 210 100% 40%;
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 100%;
+  --ring: 210 100% 50%;
+  --radius: 1rem;
 }
 
 .dark {
-  --background: hsl(230, 25%, 5%);
-  --foreground: hsl(180, 100%, 90%);
-  --muted: hsl(230, 25%, 10%);
-  --muted-foreground: hsl(180, 50%, 60%);
-  --popover: hsl(230, 25%, 3.9%);
-  --popover-foreground: hsl(180, 100%, 90%);
-  --card: hsl(230, 25%, 8%);
-  --card-foreground: hsl(180, 100%, 90%);
-  --border: hsl(180, 100%, 20%);
-  --input: hsl(180, 100%, 15%);
-  --primary: hsl(180, 100%, 50%);
-  --primary-foreground: hsl(180, 100%, 5%);
-  --secondary: hsl(230, 25%, 15.9%);
-  --secondary-foreground: hsl(0, 0%, 98%);
-  --accent: hsl(230, 25%, 15.9%);
-  --accent-foreground: hsl(0, 0%, 98%);
-  --destructive: hsl(0, 62.8%, 30.6%);
-  --destructive-foreground: hsl(0, 0%, 98%);
-  --ring: hsl(180, 100%, 83.9%);
+  --background: 220 40% 5%;
+  --foreground: 220 20% 96%;
+  --muted: 220 30% 12%;
+  --muted-foreground: 220 10% 60%;
+  --popover: 220 40% 7%;
+  --popover-foreground: 220 20% 96%;
+  --card: 220 40% 8%;
+  --card-foreground: 220 20% 96%;
+  --border: 220 30% 18%;
+  --input: 220 30% 18%;
+  --primary: 210 100% 60%;
+  --primary-foreground: 220 40% 5%;
+  --accent: 210 100% 15%;
+  --accent-foreground: 210 100% 70%;
+  --ring: 210 100% 60%;
 }
 
 @layer base {
@@ -62,122 +50,42 @@
 
   body {
     @apply font-sans antialiased bg-background text-foreground;
-    font-family: 'Space Grotesk', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    background-image: 
-      radial-gradient(circle at 50% 50%, hsla(180, 100%, 50%, 0.05) 0%, transparent 50%),
-      linear-gradient(to bottom, var(--background), var(--background));
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: radial-gradient(circle at top right, hsla(210, 100%, 60%, 0.05), transparent),
+                radial-gradient(circle at bottom left, hsla(280, 100%, 60%, 0.05), transparent);
     background-attachment: fixed;
-  }
-
-  html {
-    scroll-behavior: smooth;
   }
 }
 
 @layer components {
-  .cyber-card {
-    @apply relative border backdrop-blur-md overflow-hidden;
-    background-color: hsla(230, 25%, 8%, 0.5);
-    border-color: hsl(180, 100%, 50%);
-    clip-path: polygon(0 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%);
+  .glass-card {
+    @apply bg-card/60 backdrop-blur-xl border border-border/50 shadow-xl shadow-black/5;
   }
 
-  .cyber-button {
-    @apply relative px-6 py-2 bg-primary text-primary-foreground font-bold uppercase tracking-wider transition-all duration-300 active:scale-95;
-    box-shadow: 0 0 15px hsla(180, 100%, 50%, 0.4);
-    clip-path: polygon(10% 0, 100% 0, 100% 70%, 90% 100%, 0 100%, 0 30%);
+  .premium-button {
+    @apply relative px-8 py-3 bg-primary text-primary-foreground font-semibold rounded-full transition-all duration-300 hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-2;
+    box-shadow: 0 4px 14px 0 rgba(0, 118, 255, 0.39);
   }
 
-  .metamask-orange {
-    color: hsl(var(--metamask-orange));
+  .premium-button:hover {
+    box-shadow: 0 6px 20px rgba(0, 118, 255, 0.23);
   }
-  
-  .bg-metamask-orange {
-    background-color: hsl(var(--metamask-orange));
-  }
-  
-  .hover-metamask-orange:hover {
-    background-color: hsla(180, 100%, 50%, 0.8);
-  }
-  
-  .bg-dark-navy {
-    background-color: hsl(var(--dark-navy));
-  }
-  
-  .bg-dark-blue {
-    background-color: hsl(var(--dark-blue));
-  }
-  
-  .bg-royal-blue {
-    background-color: hsl(var(--royal-blue));
-  }
-  
-  .text-gold {
-    color: hsl(var(--gold));
-  }
-  
-  .text-gold-dark {
-    color: hsl(var(--gold-dark));
-  }
-  
-  .border-gold {
-    border-color: hsl(var(--gold));
-  }
-  
-  .border-gold-dark {
-    border-color: hsl(var(--gold-dark));
-  }
-  
+
   .gradient-text {
-    background: linear-gradient(135deg, hsl(180, 100%, 50%) 0%, hsl(280, 100%, 60%) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-blue-400 font-bold;
   }
-  
+
+  .nav-item {
+    @apply flex items-center gap-3 p-3 mx-2 my-1 rounded-xl text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-all duration-300 cursor-pointer font-medium;
+  }
+
   .sidebar-hidden {
     transform: translateX(-100%);
   }
-  
-  .nav-item {
-    @apply flex items-center gap-3 p-3 mx-2 my-1 rounded-lg text-gray-300 hover:bg-orange-500 hover:bg-opacity-10 hover:text-orange-500 transition-all duration-300 cursor-pointer;
-  }
-  
-  .nav-item.active {
-    @apply bg-orange-500 bg-opacity-10 text-orange-500;
-    transform: translateX(5px);
-  }
-  
-  .wallet-connected .connect-btn {
-    @apply bg-green-500 text-white;
-  }
-  
-  .wallet-connected .connect-btn:hover {
-    @apply bg-green-600;
-  }
 
-  /* Performance optimizations */
-  * {
-    -webkit-tap-highlight-color: transparent;
-  }
-
-  /* Smooth scrolling and optimized animations */
-  @media (prefers-reduced-motion: no-preference) {
-    .transition-transform {
-      transition: transform 0.2s ease-out;
-    }
-  }
-
-  /* Touch optimization for mobile */
-  button, [role="button"] {
-    touch-action: manipulation;
-    min-height: 44px;
-    min-width: 44px;
-  }
-
-  /* Optimized loading states */
   .loading-skeleton {
-    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    @apply bg-muted;
+    background-image: linear-gradient(90deg, transparent 25%, hsl(var(--accent)) 50%, transparent 75%);
     background-size: 200% 100%;
     animation: loading 1.5s infinite;
   }

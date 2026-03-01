@@ -48,34 +48,32 @@ export default function FooterSection() {
   ];
 
   return (
-    <footer id="footer" className="bg-background border-t border-primary/20 relative overflow-hidden">
-      <div className="absolute inset-0 bg-primary/[0.01] pointer-events-none"></div>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-16 relative">
+    <footer id="footer" className="bg-card border-t border-border/50 relative overflow-hidden">
+      <div className="max-w-7xl mx-auto px-8 py-20 relative">
         {/* Main Footer Content */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-6 sm:gap-8 mb-8 sm:mb-12 font-mono">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-12 mb-16">
           {/* Brand Section */}
           <div className="lg:col-span-2">
-            <div className="flex items-center gap-3 mb-4 sm:mb-6">
-              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-primary flex items-center justify-center shadow-[0_0_15px_rgba(0,255,255,0.3)]" style={{ clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)" }}>
-                <Globe size={20} className="sm:w-6 sm:h-6 text-primary-foreground" />
+            <div className="flex items-center gap-3 mb-8">
+              <div className="w-12 h-12 bg-primary rounded-2xl flex items-center justify-center shadow-lg shadow-primary/20">
+                <Globe size={24} className="text-white" />
               </div>
-              <h3 className="text-xl sm:text-2xl font-black text-primary tracking-tighter neon-text uppercase">BLOCKCHAIN_OS</h3>
+              <h3 className="text-2xl font-bold tracking-tight">Blockchain</h3>
             </div>
-            <p className="text-muted-foreground mb-4 sm:mb-6 text-sm uppercase tracking-widest leading-relaxed">
-              The ultimate decentralized operating system for multi-chain asset management. Secure. Immutable. Distributed.
+            <p className="text-muted-foreground mb-8 text-lg font-medium leading-relaxed">
+              The premier platform for professional multi-chain asset governance. Secure. Sophisticated. Seamless.
             </p>
-            <div className="flex space-x-3 sm:space-x-4">
+            <div className="flex space-x-4">
               {socialLinks.map((social, index) => {
                 const IconComponent = social.icon;
                 return (
                   <a
                     key={index}
                     href={social.href}
-                    className="w-10 h-10 sm:w-12 sm:h-12 border border-primary/20 hover:border-primary hover:bg-primary/10 flex items-center justify-center transition-all duration-300 hover:-translate-y-1"
+                    className="w-12 h-12 rounded-2xl border border-border bg-card hover:bg-primary/10 hover:border-primary/50 flex items-center justify-center transition-all duration-300 hover:-translate-y-1"
                     aria-label={social.label}
-                    style={{ clipPath: "polygon(20% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0% 20%)" }}
                   >
-                    <IconComponent size={18} className="sm:w-5 sm:h-5 text-primary" />
+                    <IconComponent size={20} className="text-muted-foreground hover:text-primary transition-colors" />
                   </a>
                 );
               })}
@@ -85,15 +83,15 @@ export default function FooterSection() {
           {/* Footer Links */}
           {footerLinks.map((section, index) => (
             <div key={index} className="lg:col-span-1">
-              <h4 className="text-xs font-black mb-3 sm:mb-4 text-primary uppercase tracking-[0.2em]">{section.title}</h4>
-              <ul className="space-y-2 sm:space-y-3">
+              <h4 className="text-sm font-bold mb-6 text-foreground uppercase tracking-widest">{section.title}</h4>
+              <ul className="space-y-4">
                 {section.links.map((link, linkIndex) => (
                   <li key={linkIndex}>
                     <a
                       href={link.href}
-                      className="text-muted-foreground hover:text-primary transition-colors duration-200 text-xs uppercase tracking-widest font-bold"
+                      className="text-muted-foreground hover:text-primary transition-colors duration-200 font-medium"
                     >
-                      {link.name.replace(' ', '_')}
+                      {link.name}
                     </a>
                   </li>
                 ))}
@@ -103,46 +101,48 @@ export default function FooterSection() {
         </div>
 
         {/* Security & Trust Section */}
-        <div className="border-y border-primary/10 py-6 sm:py-8 mb-6 sm:mb-8 bg-primary/[0.02]">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 font-mono">
-            <div className="flex items-center gap-3 text-primary/60">
-              <Shield size={20} className="sm:w-6 sm:h-6 text-primary flex-shrink-0" />
+        <div className="border-y border-border/50 py-12 mb-12">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 rounded-2xl bg-green-500/10 flex items-center justify-center text-green-500">
+                <Shield size={24} />
+              </div>
               <div>
-                <div className="font-black text-xs uppercase tracking-widest">Protocol_Shield_v2</div>
-                <div className="text-[10px] text-muted-foreground uppercase">Real-time threat mitigation</div>
+                <div className="font-bold">Institutional Security</div>
+                <div className="text-sm text-muted-foreground font-medium">Bank-grade asset protection</div>
               </div>
             </div>
-            <div className="flex items-center gap-3 text-primary/60">
-              <Lock size={20} className="sm:w-6 sm:h-6 text-secondary flex-shrink-0" />
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 rounded-2xl bg-blue-500/10 flex items-center justify-center text-blue-500">
+                <Lock size={24} />
+              </div>
               <div>
-                <div className="font-black text-xs uppercase tracking-widest">RSA_4096_Vault</div>
-                <div className="text-[10px] text-muted-foreground uppercase">Zero-knowledge proofs</div>
+                <div className="font-bold">Total Encryption</div>
+                <div className="text-sm text-muted-foreground font-medium">Privacy-first architecture</div>
               </div>
             </div>
-            <div className="flex items-center gap-3 text-primary/60">
-              <FileText size={20} className="sm:w-6 sm:h-6 text-primary flex-shrink-0" />
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 rounded-2xl bg-purple-500/10 flex items-center justify-center text-purple-500">
+                <FileText size={24} />
+              </div>
               <div>
-                <div className="font-black text-xs uppercase tracking-widest">Smart_Audit_Sync</div>
-                <div className="text-[10px] text-muted-foreground uppercase">Continuous verification</div>
+                <div className="font-bold">Audited Protocols</div>
+                <div className="text-sm text-muted-foreground font-medium">Verified smart contract logic</div>
               </div>
             </div>
           </div>
         </div>
 
         {/* Bottom Section */}
-        <div className="pt-6 sm:pt-8 font-mono text-[10px] uppercase tracking-[0.3em]">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-3 sm:gap-4">
-            <div className="text-muted-foreground text-center md:text-left">
-              © 2026_BLOCKCHAIN_CORP // ALL_RIGHTS_RESERVED
-            </div>
-            <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-6">
-              <span className="text-muted-foreground text-center">
-                V4.0.2_STABLE_BUILD
-              </span>
-              <div className="flex items-center gap-2 text-primary animate-pulse">
-                <div className="w-1.5 h-1.5 bg-primary rounded-none shadow-[0_0_8px_rgba(0,255,255,0.8)]"></div>
-                <span>UPLINK_STABLE</span>
-              </div>
+        <div className="flex flex-col md:flex-row justify-between items-center gap-6 font-medium text-sm text-muted-foreground">
+          <div>
+            © 2026 Blockchain Platform. All rights reserved.
+          </div>
+          <div className="flex items-center gap-8">
+            <span>Build v4.0.2 Stable</span>
+            <div className="flex items-center gap-2 text-green-500">
+              <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+              <span>Network Active</span>
             </div>
           </div>
         </div>

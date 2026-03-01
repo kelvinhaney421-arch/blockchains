@@ -4,66 +4,63 @@ interface AnalyticsSectionProps {
 
 export default function AnalyticsSection({ scrollToSection }: AnalyticsSectionProps) {
   return (
-    <section id="analytics" className="min-h-screen bg-background p-4 sm:p-8 lg:p-20 relative">
-      <div className="absolute inset-0 bg-primary/[0.02] pointer-events-none" style={{ backgroundImage: "linear-gradient(rgba(0,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(0,255,255,0.1) 1px, transparent 1px)", backgroundSize: "100px 100px" }}></div>
-      <div className="max-w-6xl mx-auto relative">
-        <div className="text-center mb-8 sm:mb-16">
-          <h2 className="text-3xl sm:text-5xl font-black text-primary mb-4 sm:mb-6 uppercase tracking-tighter neon-text">NEURAL_ANALYTICS</h2>
-          <p className="text-base sm:text-xl text-muted-foreground max-w-3xl mx-auto font-mono uppercase tracking-widest">
-            Predictive market heuristics and yield optimization
+    <section id="analytics" className="min-h-screen bg-background p-8 lg:p-20 relative">
+      <div className="max-w-6xl mx-auto">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl sm:text-6xl font-bold tracking-tight mb-6">Market <span className="gradient-text">Analytics</span></h2>
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto font-medium">
+            Strategic insights powered by neural performance tracking.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-8 mb-8 sm:mb-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
           {/* Chart Placeholder */}
-          <div className="cyber-card p-4 sm:p-8 bg-card/60">
-            <h3 className="text-lg sm:text-xl font-black text-primary mb-4 sm:mb-6 uppercase font-mono tracking-widest">PERFORMANCE_ENGINE</h3>
-            <div className="h-48 sm:h-64 bg-background/50 border border-primary/20 flex items-center justify-center relative overflow-hidden">
-              <div className="absolute inset-0 opacity-10 flex flex-col justify-between p-4 pointer-events-none">
-                {[...Array(5)].map((_, i) => <div key={i} className="w-full h-px bg-primary"></div>)}
-              </div>
-              <div className="text-primary/60 text-center px-4 relative z-10 font-mono">
-                <div className="text-4xl sm:text-6xl mb-2 sm:mb-4 animate-pulse">⚡</div>
-                <div className="text-sm sm:text-base uppercase font-bold">Waiting_for_Data_Link</div>
-                <div className="text-[10px] mt-1 sm:mt-2 opacity-50">ESTABLISH_WALLET_CONNECTION_TO_SYNC</div>
+          <div className="rounded-3xl border bg-card p-8 shadow-sm">
+            <h3 className="text-xl font-bold mb-6">Portfolio Trajectory</h3>
+            <div className="h-64 bg-accent/50 rounded-2xl flex items-center justify-center relative overflow-hidden group">
+              <div className="absolute inset-0 bg-gradient-to-t from-primary/5 to-transparent"></div>
+              <div className="text-center relative z-10 p-8">
+                <div className="text-6xl mb-6 group-hover:scale-110 transition-transform duration-500">📈</div>
+                <div className="text-lg font-bold uppercase tracking-wider text-primary">Awaiting Synchronization</div>
+                <p className="text-sm text-muted-foreground font-medium mt-2 uppercase tracking-widest">Establish link to reveal metrics</p>
               </div>
             </div>
           </div>
 
           {/* Metrics */}
-          <div className="space-y-4 sm:space-y-6">
-            <div className="cyber-card p-4 sm:p-6 bg-card/60">
-              <h4 className="text-base sm:text-lg font-bold text-primary mb-3 sm:mb-4 uppercase font-mono">SYSTEM_METRICS</h4>
-              <div className="space-y-3 sm:space-y-4 font-mono uppercase text-xs">
-                <div className="flex justify-between border-b border-primary/10 pb-2">
-                  <span className="text-primary/60">Net_Yield</span>
-                  <span className="text-primary font-bold">+0.00%</span>
+          <div className="space-y-6">
+            <div className="rounded-3xl border bg-card p-8 shadow-sm">
+              <h4 className="text-lg font-bold mb-6 uppercase tracking-widest text-primary/80">Growth Metrics</h4>
+              <div className="space-y-4 font-medium">
+                <div className="flex justify-between items-center py-2 border-b border-border/50">
+                  <span className="text-muted-foreground">Aggregate Yield</span>
+                  <span className="text-green-500 font-bold">+0.00%</span>
                 </div>
-                <div className="flex justify-between border-b border-primary/10 pb-2">
-                  <span className="text-primary/60">Peak_Asset</span>
-                  <span className="text-white font-bold">NULL_REF</span>
+                <div className="flex justify-between items-center py-2 border-b border-border/50">
+                  <span className="text-muted-foreground">Prime Asset</span>
+                  <span className="font-bold">N/A</span>
                 </div>
-                <div className="flex justify-between border-b border-primary/10 pb-2">
-                  <span className="text-primary/60">Diversity_Index</span>
-                  <span className="text-secondary font-bold">0.00</span>
+                <div className="flex justify-between items-center py-2 border-b border-border/50">
+                  <span className="text-muted-foreground">Allocation Alpha</span>
+                  <span className="text-blue-500 font-bold">0.00</span>
                 </div>
               </div>
             </div>
 
-            <div className="cyber-card p-4 sm:p-6 bg-card/60">
-              <h4 className="text-base sm:text-lg font-bold text-primary mb-3 sm:mb-4 uppercase font-mono">MARKET_INTEL</h4>
-              <div className="space-y-3 sm:space-y-4 font-mono uppercase text-xs">
-                <div className="flex justify-between border-b border-primary/10 pb-2">
-                  <span className="text-primary/60">Global_Cap</span>
-                  <span className="text-white font-bold">$2.1T_USD</span>
+            <div className="rounded-3xl border bg-card p-8 shadow-sm">
+              <h4 className="text-lg font-bold mb-6 uppercase tracking-widest text-primary/80">Market Pulse</h4>
+              <div className="space-y-4 font-medium">
+                <div className="flex justify-between items-center py-2 border-b border-border/50">
+                  <span className="text-muted-foreground">Global Market Cap</span>
+                  <span className="font-bold">$2.1T</span>
                 </div>
-                <div className="flex justify-between border-b border-primary/10 pb-2">
-                  <span className="text-primary/60">Volume_24H</span>
-                  <span className="text-white font-bold">$89.2B_USD</span>
+                <div className="flex justify-between items-center py-2 border-b border-border/50">
+                  <span className="text-muted-foreground">24h Momentum</span>
+                  <span className="font-bold">$89.2B</span>
                 </div>
-                <div className="flex justify-between border-b border-primary/10 pb-2">
-                  <span className="text-primary/60">Dominance_BTC</span>
-                  <span className="text-white font-bold">42.8%</span>
+                <div className="flex justify-between items-center py-2 border-b border-border/50">
+                  <span className="text-muted-foreground">Bitcoin Dominance</span>
+                  <span className="font-bold">42.8%</span>
                 </div>
               </div>
             </div>
@@ -71,40 +68,38 @@ export default function AnalyticsSection({ scrollToSection }: AnalyticsSectionPr
         </div>
 
         {/* Additional Analytics Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-8">
-          <div className="cyber-card p-4 sm:p-6 bg-card/60">
-            <h4 className="text-base sm:text-lg font-bold text-primary mb-3 sm:mb-4 uppercase font-mono">TX_LOGS</h4>
-            <div className="text-center text-primary/40 py-4 sm:py-8 font-mono">
-              <div className="text-3xl sm:text-4xl mb-2">📜</div>
-              <div className="text-xs uppercase font-bold tracking-widest">No_Logs_Found</div>
-              <div className="text-[10px] mt-1 sm:mt-2 opacity-50 uppercase">Sync_Required</div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="rounded-3xl border bg-card p-8 shadow-sm group hover:border-primary/50 transition-colors">
+            <h4 className="text-lg font-bold mb-6 group-hover:text-primary transition-colors">TX Registry</h4>
+            <div className="text-center py-8">
+              <div className="text-5xl mb-4 opacity-20">📜</div>
+              <p className="text-muted-foreground font-medium uppercase tracking-widest text-xs">No entries indexed</p>
             </div>
           </div>
           
-          <div className="cyber-card p-4 sm:p-6 bg-card/60 font-mono">
-            <h4 className="text-base sm:text-lg font-bold text-primary mb-3 sm:mb-4 uppercase font-mono">GAS_ORACLE</h4>
-            <div className="space-y-2 sm:space-y-3 text-[10px] uppercase tracking-widest font-bold">
-              <div className="flex justify-between border-b border-primary/10 pb-1">
-                <span className="text-primary/60">ETH_MAIN</span>
-                <span className="text-primary">25_GWEI</span>
+          <div className="rounded-3xl border bg-card p-8 shadow-sm group hover:border-primary/50 transition-colors">
+            <h4 className="text-lg font-bold mb-6 group-hover:text-primary transition-colors">Gas Oracle</h4>
+            <div className="space-y-4 text-sm font-bold tracking-tight">
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">Ethereum</span>
+                <span className="text-blue-500">25 GWEI</span>
               </div>
-              <div className="flex justify-between border-b border-primary/10 pb-1">
-                <span className="text-primary/60">BSC_SMART</span>
-                <span className="text-primary">5_GWEI</span>
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">BNB Chain</span>
+                <span className="text-green-500">5 GWEI</span>
               </div>
-              <div className="flex justify-between border-b border-primary/10 pb-1">
-                <span className="text-primary/60">POLY_L2</span>
-                <span className="text-primary">30_GWEI</span>
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">Polygon</span>
+                <span className="text-purple-500">30 GWEI</span>
               </div>
             </div>
           </div>
           
-          <div className="cyber-card p-4 sm:p-6 bg-card/60">
-            <h4 className="text-base sm:text-lg font-bold text-primary mb-3 sm:mb-4 uppercase font-mono">DEFI_VAULTS</h4>
-            <div className="text-center text-primary/40 py-4 sm:py-8 font-mono">
-              <div className="text-3xl sm:text-4xl mb-2">🏦</div>
-              <div className="text-xs uppercase font-bold tracking-widest">Empty_Registry</div>
-              <div className="text-[10px] mt-1 sm:mt-2 opacity-50 uppercase">Initialize_Stake</div>
+          <div className="rounded-3xl border bg-card p-8 shadow-sm group hover:border-primary/50 transition-colors">
+            <h4 className="text-lg font-bold mb-6 group-hover:text-primary transition-colors">Yield Vaults</h4>
+            <div className="text-center py-8">
+              <div className="text-5xl mb-4 opacity-20">🏦</div>
+              <p className="text-muted-foreground font-medium uppercase tracking-widest text-xs">No vaults active</p>
             </div>
           </div>
         </div>
