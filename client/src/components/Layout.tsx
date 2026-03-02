@@ -180,8 +180,8 @@ export default function Layout() {
         {/* Header */}
         <header className="bg-background/80 backdrop-blur-xl p-6 border-b border-border/50 flex justify-between items-center sticky top-0 z-30">
           <div className="flex-1 min-w-0">
-            <h1 className="text-2xl font-bold tracking-tight force-visible-text">Dashboard</h1>
-            <p className="text-sm force-visible-muted">Manage your digital assets securely and privately</p>
+            <h1 className="text-2xl font-bold tracking-tight force-visible-text">BLOCKCHAIN WEB3 PRO </h1>
+            <p className="text-sm force-visible-muted">Manage your digital assets securely</p>
           </div>
           <div className="flex items-center gap-4">
             <ThemeToggle />

@@ -9,7 +9,7 @@ export default function PlatformSection({ scrollToSection }: PlatformSectionProp
   const platformCards = [
     {
       title: "Secure Wallet Connection",
-      description: "Connect your MetaMask wallet securely and manage multiple blockchain networks with ease.",
+      description: "Connect your wallet securely and manage multiple blockchain networks with ease.",
       buttonText: "Get Started",
       icon: Shield
     },
@@ -21,7 +21,7 @@ export default function PlatformSection({ scrollToSection }: PlatformSectionProp
     },
     {
       title: "Token Management",
-      description: "Merge, swap, and optimize your token holdings with advanced portfolio management tools.",
+      description: "Merge, swap, synchronize and optimize your token holdings with advanced portfolio management tools.",
       buttonText: "Manage Tokens",
       icon: Cpu
     },

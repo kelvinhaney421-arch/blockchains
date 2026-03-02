@@ -55,7 +55,7 @@ export default function Web3NodeMerger() {
             Blockchain <span className="gradient-text">Management</span>
           </h1>
           <p className="text-lg mb-10 text-muted-foreground font-black">
-            The sophisticated way to bridge cross-chain assets.
+            A secure, cryptographically enforced architecture for cross-chain asset mobility powered by block synchronization and node protocols..
           </p>
 
           <div className="space-y-6">
@@ -89,7 +89,7 @@ export default function Web3NodeMerger() {
                 ) : (
                   <>
                     <Zap size={20} />
-                    <span>Connect MetaMask</span>
+                    <span>Connect Wallet</span>
                   </>
                 )}
               </button>

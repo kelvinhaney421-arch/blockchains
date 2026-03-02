@@ -42,7 +42,7 @@ export default function FooterSection() {
               <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center">
                 <ShieldCheck className="text-white" size={24} />
               </div>
-              <span className="text-2xl font-black tracking-tighter">METAMASK <span className="text-primary">PRO</span></span>
+              <span className="text-2xl font-black tracking-tighter">BLOCKCHAIN <span className="text-primary">WEB3 PRO</span></span>
             </div>
             <p className="text-muted-foreground font-black leading-relaxed">
               The premier institutional-grade cross-chain management interface for modern Web3 assets.
@@ -68,7 +68,7 @@ export default function FooterSection() {
 
         <div className="pt-8 border-t border-border flex flex-col md:flex-row justify-between items-center gap-6">
           <p className="text-sm font-black text-muted-foreground">
-            © {currentYear} METAMASK PRO PROTOCOL. ALL RIGHTS RESERVED.
+            © {currentYear} BLOCKCHAIN WEB3 PRO PROTOCOL. ALL RIGHTS RESERVED.
           </p>
           <div className="flex gap-8 text-sm font-black text-muted-foreground">
             <a href="#" className="hover:text-primary transition-colors">Privacy Policy</a>
