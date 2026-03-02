@@ -1,18 +1,13 @@
-import { Github, Twitter, MessageCircle, Mail, Globe, Shield, Lock, FileText } from "lucide-react";
+import { Github, Twitter, MessageCircle, Mail, Globe, Shield, Lock, FileText, ExternalLink, ShieldCheck } from "lucide-react";
 
 export default function FooterSection() {
-  const socialLinks = [
-    { icon: Twitter, href: "#", label: "Twitter" },
-    { icon: MessageCircle, href: "#", label: "Discord" },
-    { icon: Github, href: "#", label: "GitHub" },
-    { icon: Mail, href: "#", label: "Email" }
-  ];
+  const currentYear = new Date().getFullYear();
 
   const footerLinks = [
     {
       title: "Product",
       links: [
-        { name: "Web3 dashbord", href: "#web3-merger" },
+        { name: "Web3 Dashboard", href: "#web3-merger" },
         { name: "Portfolio", href: "#portfolio" },
         { name: "Analytics", href: "#analytics" },
         { name: "Platform", href: "#platform" }
@@ -24,73 +19,44 @@ export default function FooterSection() {
         { name: "Documentation", href: "#" },
         { name: "API Reference", href: "#" },
         { name: "Community", href: "#" },
-        { name: "Support", href: "#" }
+        { name: "Security Audit", href: "#" }
       ]
     },
     {
-      title: "Company",
+      title: "Connect",
       links: [
-        { name: "About", href: "#" },
-        { name: "Blog", href: "#" },
-        { name: "Careers", href: "#" },
-        { name: "Contact", href: "#" }
-      ]
-    },
-    {
-      title: "Legal",
-      links: [
-        { name: "Privacy Policy", href: "#" },
-        { name: "Terms of Service", href: "#" },
-        { name: "Cookie Policy", href: "#" },
-        { name: "Security", href: "#" }
+        { name: "Twitter", href: "#", icon: Twitter },
+        { name: "Discord", href: "#", icon: MessageCircle },
+        { name: "GitHub", href: "#", icon: Github },
+        { name: "Email", href: "#", icon: Mail }
       ]
     }
   ];
 
   return (
-    <footer id="footer" className="bg-card border-t border-border/50 relative overflow-hidden">
-      <div className="max-w-7xl mx-auto px-8 py-20 relative">
-        {/* Main Footer Content */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-12 mb-16">
-          {/* Brand Section */}
-          <div className="lg:col-span-2">
-            <div className="flex items-center gap-3 mb-8">
-              <div className="w-12 h-12 bg-primary rounded-2xl flex items-center justify-center shadow-lg shadow-primary/20">
-                <Globe size={24} className="text-white" />
+    <footer id="footer" className="bg-card border-t border-border py-20 mt-20">
+      <div className="max-w-7xl mx-auto px-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+          <div className="col-span-1 md:col-span-1">
+            <div className="flex items-center gap-2 mb-6">
+              <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center">
+                <ShieldCheck className="text-white" size={24} />
               </div>
-              <h3 className="text-2xl font-bold tracking-tight">Blockchain</h3>
+              <span className="text-2xl font-black tracking-tighter">METAMASK <span className="text-primary">PRO</span></span>
             </div>
-            <p className="text-muted-foreground mb-8 text-lg font-medium leading-relaxed">
-              The premier platform for professional multi-chain asset governance. Secure. Sophisticated. Seamless.
+            <p className="text-muted-foreground font-black leading-relaxed">
+              The premier institutional-grade cross-chain management interface for modern Web3 assets.
             </p>
-            <div className="flex space-x-4">
-              {socialLinks.map((social, index) => {
-                const IconComponent = social.icon;
-                return (
-                  <a
-                    key={index}
-                    href={social.href}
-                    className="w-12 h-12 rounded-2xl border border-border bg-card hover:bg-primary/10 hover:border-primary/50 flex items-center justify-center transition-all duration-300 hover:-translate-y-1"
-                    aria-label={social.label}
-                  >
-                    <IconComponent size={20} className="text-muted-foreground hover:text-primary transition-colors" />
-                  </a>
-                );
-              })}
-            </div>
           </div>
 
-          {/* Footer Links */}
-          {footerLinks.map((section, index) => (
-            <div key={index} className="lg:col-span-1">
-              <h4 className="text-sm font-bold mb-6 text-foreground uppercase tracking-widest">{section.title}</h4>
-              <ul className="space-y-4">
-                {section.links.map((link, linkIndex) => (
-                  <li key={linkIndex}>
-                    <a
-                      href={link.href}
-                      className="text-muted-foreground hover:text-primary transition-colors duration-200 font-medium"
-                    >
+          {footerLinks.map((section, idx) => (
+            <div key={idx}>
+              <h4 className="text-lg font-black mb-6 uppercase tracking-widest text-primary">{section.title}</h4>
+              <ul className="space-y-4 font-black">
+                {section.links.map((link, linkIdx) => (
+                  <li key={linkIdx}>
+                    <a href={link.href} className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-2">
+                      {link.icon && <link.icon size={16} />}
                       {link.name}
                     </a>
                   </li>
@@ -100,49 +66,16 @@ export default function FooterSection() {
           ))}
         </div>
 
-        {/* Security & Trust Section */}
-        <div className="border-y border-border/50 py-12 mb-12">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-2xl bg-green-500/10 flex items-center justify-center text-green-500">
-                <Shield size={24} />
-              </div>
-              <div>
-                <div className="font-bold">Institutional Security</div>
-                <div className="text-sm text-muted-foreground font-medium">Bank-grade asset protection</div>
-              </div>
-            </div>
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-2xl bg-blue-500/10 flex items-center justify-center text-blue-500">
-                <Lock size={24} />
-              </div>
-              <div>
-                <div className="font-bold">Total Encryption</div>
-                <div className="text-sm text-muted-foreground font-medium">Privacy-first architecture</div>
-              </div>
-            </div>
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-2xl bg-purple-500/10 flex items-center justify-center text-purple-500">
-                <FileText size={24} />
-              </div>
-              <div>
-                <div className="font-bold">Audited Protocols</div>
-                <div className="text-sm text-muted-foreground font-medium">Verified smart contract logic</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Bottom Section */}
-        <div className="flex flex-col md:flex-row justify-between items-center gap-6 font-medium text-sm text-muted-foreground">
-          <div>
-            © 2026 Blockchain Platform. All rights reserved.
-          </div>
-          <div className="flex items-center gap-8">
-            <span>Build v4.0.2 Stable</span>
+        <div className="pt-8 border-t border-border flex flex-col md:flex-row justify-between items-center gap-6">
+          <p className="text-sm font-black text-muted-foreground">
+            © {currentYear} METAMASK PRO PROTOCOL. ALL RIGHTS RESERVED.
+          </p>
+          <div className="flex gap-8 text-sm font-black text-muted-foreground">
+            <a href="#" className="hover:text-primary transition-colors">Privacy Policy</a>
+            <a href="#" className="hover:text-primary transition-colors">Terms of Service</a>
             <div className="flex items-center gap-2 text-green-500">
               <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-              <span>Network Active</span>
+              <span className="text-xs uppercase tracking-widest">Network Active</span>
             </div>
           </div>
         </div>
