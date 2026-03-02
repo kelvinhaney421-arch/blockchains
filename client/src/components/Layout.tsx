@@ -5,6 +5,7 @@ import PortfolioSection from "./PortfolioSection";
 import AnalyticsSection from "./AnalyticsSection";
 import PlatformSection from "./PlatformSection";
 import FooterSection from "./FooterSection";
+import { ThemeToggle } from "./theme-toggle";
 import { useWeb3 } from "../hooks/useWeb3";
 
 export default function Layout() {
@@ -179,10 +180,11 @@ export default function Layout() {
         {/* Header */}
         <header className="bg-background/80 backdrop-blur-xl p-6 border-b border-border/50 flex justify-between items-center sticky top-0 z-30">
           <div className="flex-1 min-w-0">
-            <h1 className="text-2xl font-bold tracking-tight">Dashboard</h1>
-            <p className="text-muted-foreground text-sm font-medium">Manage your digital assets securely</p>
+            <h1 className="text-2xl font-bold tracking-tight">Blockchain Web3 Dashboard</h1>
+            <p className="text-muted-foreground text-sm font-medium">Manage your digital assets securely and privately</p>
           </div>
           <div className="flex items-center gap-4">
+            <ThemeToggle />
             <div className="hidden sm:flex items-center gap-2 px-4 py-2 rounded-full bg-accent text-accent-foreground text-sm font-semibold border border-border/50">
               <div className={`w-2 h-2 ${walletStatus.dotColor} rounded-full animate-pulse`}></div>
               {walletStatus.text}

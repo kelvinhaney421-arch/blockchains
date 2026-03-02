@@ -126,7 +126,7 @@ function App() {
             <div className="w-8 h-8 sm:w-10 sm:h-10 bg-orange-500 rounded-lg flex items-center justify-center">
               <Zap size={18} className="sm:w-5 sm:h-5" />
             </div>
-            <h2 className="text-lg sm:text-xl font-bold text-white">MetaMask</h2>
+            <h2 className="text-lg sm:text-xl font-bold text-white">Blockchain</h2>
           </div>
           <button
             onClick={() => setIsMobileMenuOpen(false)}
