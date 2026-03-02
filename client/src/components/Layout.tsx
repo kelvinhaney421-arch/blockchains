@@ -115,28 +115,28 @@ export default function Layout() {
         <nav className="p-4 space-y-2">
           <button
             onClick={() => scrollToSection('web3-merger')}
-            className={`nav-item w-full ${activeSection === 'web3-merger' ? 'bg-primary text-white shadow-lg shadow-primary/20' : ''}`}
+            className={`nav-item w-full ${activeSection === 'web3-merger' ? 'bg-primary text-white shadow-lg shadow-primary/20 hover:text-white' : ''}`}
           >
             <Wallet size={18} />
             Dashboard
           </button>
           <button
             onClick={() => scrollToSection('portfolio')}
-            className={`nav-item w-full ${activeSection === 'portfolio' ? 'bg-primary text-white shadow-lg shadow-primary/20' : ''}`}
+            className={`nav-item w-full ${activeSection === 'portfolio' ? 'bg-primary text-white shadow-lg shadow-primary/20 hover:text-white' : ''}`}
           >
             <DollarSign size={18} />
             Portfolio
           </button>
           <button
             onClick={() => scrollToSection('analytics')}
-            className={`nav-item w-full ${activeSection === 'analytics' ? 'bg-primary text-white shadow-lg shadow-primary/20' : ''}`}
+            className={`nav-item w-full ${activeSection === 'analytics' ? 'bg-primary text-white shadow-lg shadow-primary/20 hover:text-white' : ''}`}
           >
             <TrendingUp size={18} />
             Analytics
           </button>
           <button
             onClick={() => scrollToSection('platform')}
-            className={`nav-item w-full ${activeSection === 'platform' ? 'bg-primary text-white shadow-lg shadow-primary/20' : ''}`}
+            className={`nav-item w-full ${activeSection === 'platform' ? 'bg-primary text-white shadow-lg shadow-primary/20 hover:text-white' : ''}`}
           >
             <Home size={18} />
             Platform
